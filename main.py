@@ -17,7 +17,7 @@ from models import MINE, Classifier
 from train_mine import train_mine, mutual_info_mine
 from train_classifier import train_classifier
 
-def build_dataset(cipher, n=4096, pt_len=16, ct_len=16, num_classes=10):
+def build_dataset(cipher, n=20000, pt_len=128, ct_len=128, num_classes=2):
     """Generate plaintext/ciphertext dataset depending on cipher"""
     if cipher in ["aes-ecb", "aes-ctr", "aes-ctr-reduced", "des"]:
         # multiclass plaintexts
@@ -92,7 +92,7 @@ def run_experiment(cipher, device="cpu", epochs=5, batch_size=256):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--cipher", type=str, default="aes-ecb",
+    parser.add_argument("--cipher", type=str, default="aes-ctr",
                         choices=["aes-ecb", "aes-ctr", "aes-ctr-reduced", "des", "rsa"])
     parser.add_argument("--epochs", type=int, default=5)
     parser.add_argument("--batch_size", type=int, default=256)
