@@ -4,22 +4,15 @@ import torch
 import numpy as np
 from torch.utils.data import DataLoader,random_split
 
-from data_gen import (
-    generate_plaintexts_random,
-    generate_plaintexts_classes,
-    aes_ecb_encrypt_batch,
-    aes_ctr_encrypt_batch,
-    des_ecb_encrypt_batch,
-    rsa_encrypt_batch,
-)
+from data_gen import *
 from utils import PTCTDataset
 from models import MINE, Classifier
 from train_mine import train_mine, mutual_info_mine
 from train_classifier import train_classifier
-
+mc = secrets.token_bytes(100)
 def build_dataset(cipher, n=20000, pt_len=128, ct_len=128, num_classes=2):
     """Generate plaintext/ciphertext dataset depending on cipher"""
-    if cipher in ["aes-ecb", "aes-ctr", "aes-ctr-reduced", "des"]:
+    if cipher in ["aes-ecb", "aes-ctr", "aes-ctr-reduced", "des","xor","caesar","sbox"]:
         # multiclass plaintexts
         pts, labels = generate_plaintexts_classes(n, length=pt_len, num_classes=num_classes)
     else:
@@ -38,6 +31,12 @@ def build_dataset(cipher, n=20000, pt_len=128, ct_len=128, num_classes=2):
     elif cipher == "rsa":
         key, cts = rsa_encrypt_batch(pts, key_size=1024)
         ct_len = max(len(c) for c in cts)
+    elif cipher == "xor":
+        key,cts = xor_encrypt_batch_multikey(pts ,labels,num_classes)
+    elif cipher =="caesar":
+        key,cts = caesar_encrypt_batch(pts)
+    elif cipher=="sbox":
+        key,cts = substitution_encrypt_batch(pts)
     else:
         raise ValueError("Unknown cipher")
 
@@ -92,9 +91,9 @@ def run_experiment(cipher, device="cpu", epochs=5, batch_size=256):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--cipher", type=str, default="aes-ctr",
-                        choices=["aes-ecb", "aes-ctr", "aes-ctr-reduced", "des", "rsa"])
-    parser.add_argument("--epochs", type=int, default=5)
+    parser.add_argument("--cipher", type=str, default="xor",
+                        choices=["aes-ecb", "aes-ctr", "aes-ctr-reduced", "des","xor","caesar","sbox"])
+    parser.add_argument("--epochs", type=int, default=20)
     parser.add_argument("--batch_size", type=int, default=256)
     args = parser.parse_args()
 

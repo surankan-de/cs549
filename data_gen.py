@@ -8,7 +8,34 @@ from Crypto.Util import Counter
 from Crypto.Random import get_random_bytes
 import secrets
 
-BLOCK_SIZE = 16  # bytes for AES
+BLOCK_SIZE = 64  # bytes for AES
+
+def xor_encrypt_batch_multikey(plaintexts, labels, num_keys=2):
+    """
+    Encrypt plaintexts with XOR using a set of keys (one per class/label).
+    Labels correspond to key IDs.
+    """
+    keys = [secrets.token_bytes(len(plaintexts[0])) for _ in range(num_keys)]
+    cts = []
+    for p, lab in zip(plaintexts, labels):
+        k = keys[int(lab)]
+        cts.append(bytes([p[i] ^ k[i % len(k)] for i in range(len(p))]))
+    return keys, cts
+
+
+def caesar_encrypt_batch(plaintexts, shift=3):
+    cts = [bytes([(b + shift) % 256 for b in p]) for p in plaintexts]
+    return shift, cts
+
+def substitution_encrypt_batch(plaintexts, sbox=None):
+    if sbox is None:
+        sbox = np.arange(256, dtype=np.uint8)
+        np.random.shuffle(sbox)
+    inv_sbox = np.zeros_like(sbox)
+    inv_sbox[sbox] = np.arange(256)
+    cts = [bytes([sbox[b] for b in p]) for p in plaintexts]
+    return sbox, cts
+
 
 def pad_pkcs7(b, block=16):
     pad_len = block - (len(b) % block)
