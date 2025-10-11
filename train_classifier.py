@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader
 import torch.optim as optim
 import torch.nn.functional as F
 from tqdm import tqdm
-from models import Classifier
+from models import Classifier, LinearClassifier  # import your linear classifier too
 from utils import PTCTDataset
 import numpy as np
 
@@ -18,6 +18,7 @@ def train_classifier(model, dataset, device='cpu', epochs=10, batch_size=256, lr
         correct = 0
         total = 0
         for pt, ct, labels in tqdm(loader, desc=f"Epoch {epoch+1}/{epochs}"):
+
             pt = pt.to(device)
             ct = ct.to(device)
             labels = labels.to(device)
@@ -30,16 +31,25 @@ def train_classifier(model, dataset, device='cpu', epochs=10, batch_size=256, lr
             preds = logits.argmax(dim=1)
             correct += (preds == labels).sum().item()
             total += labels.size(0)
-        acc = correct/total
+        acc = correct / total
         print(f"Epoch {epoch+1} loss {np.mean(losses):.4f} acc {acc:.4f}")
     return model
 
 if __name__ == "__main__":
     # demo multiclass classifier on AES-ECB plaintext classes
     from data_gen import generate_plaintexts_classes, aes_ecb_encrypt_batch
+
     pts, labels = generate_plaintexts_classes(4096, length=16, num_classes=10)
     key, cts = aes_ecb_encrypt_batch(pts)
     ds = PTCTDataset(pts, cts, labels=labels, pt_len=16, ct_len=16)
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    model = Classifier(16, 16, hidden=256, num_classes=10)
+
+    # ---- Choose model here ----
+    model_type = "linear"  # "linear" or "mlp"
+    if model_type == "linear":
+        model = LinearClassifier(pt_dim=16, ct_dim=16, num_classes=10)
+    else:
+        model = Classifier(pt_dim=16, ct_dim=16, hidden=256, num_classes=10)
+
     train_classifier(model, ds, device=device, epochs=10, batch_size=256)

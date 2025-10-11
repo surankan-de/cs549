@@ -21,20 +21,134 @@ def xor_encrypt_batch_multikey(plaintexts, labels, num_keys=2):
         k = keys[int(lab)]
         cts.append(bytes([p[i] ^ k[i % len(k)] for i in range(len(p))]))
     return keys, cts
+def vigenere_autokey_encrypt_batch(plaintexts, labels, key_len=8, num_classes=4):
+    """
+    Class-aware Autokey Vigenère-style encryption.
+    
+    - Each class has its own distinct initial key (secrets.token_bytes).
+    - The key is extended using the plaintext itself (autokey).
+    """
+    keys = [secrets.token_bytes(len(plaintexts[0])//2) for _ in range(num_classes)]
+    cts = []
 
+    for p, lab in zip(plaintexts, labels):
+        k = keys[int(lab)]
+        ct_bytes = bytearray(len(p))
+        key_stream = bytearray(k)
+
+        for i in range(len(p)):
+            ct_bytes[i] = (p[i] + key_stream[i]) % 256
+            key_stream.append(p[i])  # Autokey: extend stream with plaintext
+
+        cts.append(bytes(ct_bytes))
+
+    return keys, cts
+
+def vigenere_like_multikey_encrypt_batch(plaintexts, labels, num_keys=4):
+    """
+    Vigenere-style encryption with distinct keys per class.
+    Labels determine which key to use for each plaintext.
+    """
+    key_len = len(plaintexts[0])  # Length of each Vigenere key
+    # Generate distinct keys for each class
+    keys = [secrets.token_bytes(key_len) for _ in range(num_keys)]
+    
+    cts = []
+    for p, lab in zip(plaintexts, labels):
+        k = keys[int(lab)]
+        ct = bytes([(p[i] + k[i % len(k)]) % 256 for i in range(len(p))])
+        cts.append(ct)
+    
+    return keys, cts
+
+def shift_encrypt_batch_multikey(plaintexts, labels, num_keys=2):
+    """
+    Encrypt plaintexts with XOR using a set of keys (one per class/label).
+    Labels correspond to key IDs.
+    """
+    keys = []
+    used = set()
+    while len(keys) < num_keys:
+        s = secrets.randbelow(256)
+        if s not in used:
+            keys.append(s)
+            used.add(s)
+    cts = []
+    for p, lab in zip(plaintexts, labels):
+        shift = keys[int(lab)]
+        cts.append(bytes([(b + shift) % 256 for b in p]))
+    return keys, cts
+def rotate_encrypt_batch_multikey(plaintexts, labels, num_keys=2):
+    """
+    Encrypt plaintexts using class-dependent distinct rotations.
+    Each label corresponds to a unique random rotation.
+    """
+    # Generate distinct random rotations for each class
+    rotations = []
+    used = set()
+    while len(rotations) < num_keys:
+        r = secrets.randbelow(16)  # rotation < plaintext length
+        if r not in used:
+            rotations.append(r)
+            used.add(r)
+    
+    cts = []
+    for p, lab in zip(plaintexts, labels):
+        rotation_actual = rotations[int(lab)] % len(p)
+        rotated = p[rotation_actual:] + p[:rotation_actual]
+        cts.append(rotated)
+    
+    return rotations, cts
+def affine_encrypt_batch_multikey(plaintexts, labels, num_keys=2):
+    """
+    Encrypt plaintexts using class-dependent distinct affine transformations.
+    Affine cipher: E(x) = (a * x + b) % 256
+    Each label corresponds to a unique (a, b) pair.
+    """
+    # Generate distinct 'a' values (coprime with 256) and random 'b' values
+    def coprime_with_256(x):
+        from math import gcd
+        return gcd(x, 256) == 1
+
+    a_values = []
+    used_a = set()
+    while len(a_values) < num_keys:
+        a = secrets.randbelow(255) + 1  # 1..255
+        if a not in used_a and coprime_with_256(a):
+            a_values.append(a)
+            used_a.add(a)
+
+    b_values = [secrets.randbelow(256) for _ in range(num_keys)]
+
+    # Encrypt
+    cts = []
+    for p, lab in zip(plaintexts, labels):
+        a = a_values[int(lab)]
+        b = b_values[int(lab)]
+        ct = bytes([(a * byte + b) % 256 for byte in p])
+        cts.append(ct)
+
+    keys = list(zip(a_values, b_values))
+    return keys, cts
 
 def caesar_encrypt_batch(plaintexts, shift=3):
     cts = [bytes([(b + shift) % 256 for b in p]) for p in plaintexts]
     return shift, cts
 
-def substitution_encrypt_batch(plaintexts, sbox=None):
-    if sbox is None:
-        sbox = np.arange(256, dtype=np.uint8)
-        np.random.shuffle(sbox)
-    inv_sbox = np.zeros_like(sbox)
-    inv_sbox[sbox] = np.arange(256)
-    cts = [bytes([sbox[b] for b in p]) for p in plaintexts]
-    return sbox, cts
+def substitution_encrypt_batch(plaintexts, labels, num_classes=4, sboxes=None):
+    """Class-aware substitution cipher (one S-box per label/class)"""
+    if sboxes is None:
+        sboxes = []
+        for _ in range(num_classes):
+            sbox = np.arange(256, dtype=np.uint8)
+            np.random.shuffle(sbox)
+            sboxes.append(sbox)
+    cts = []
+    for p, lab in zip(plaintexts, labels):
+        sbox = sboxes[int(lab)]
+        cts.append(bytes([sbox[b] for b in p]))
+    return sboxes, cts
+
 
 
 def pad_pkcs7(b, block=16):

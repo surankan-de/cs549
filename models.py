@@ -49,3 +49,13 @@ class Classifier(nn.Module):
     def forward(self, x, y):
         h = torch.cat([x, y], dim=-1)
         return self.net(h)
+    
+class LinearClassifier(nn.Module):
+    def __init__(self, pt_dim, ct_dim, num_classes=2):
+        super().__init__()
+        self.fc = nn.Linear(pt_dim + ct_dim, num_classes)
+    def forward(self, x, y):
+        h = torch.cat([x, y], dim=-1)
+        return self.fc(h)
+
+

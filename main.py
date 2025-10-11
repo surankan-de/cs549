@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader,random_split
 
 from data_gen import *
 from utils import PTCTDataset
-from models import MINE, Classifier
+from models import *
 from train_mine import train_mine, mutual_info_mine
 from train_classifier import train_classifier
 mc = secrets.token_bytes(100)
@@ -33,10 +33,20 @@ def build_dataset(cipher, n=20000, pt_len=128, ct_len=128, num_classes=2):
         ct_len = max(len(c) for c in cts)
     elif cipher == "xor":
         key,cts = xor_encrypt_batch_multikey(pts ,labels,num_classes)
+    elif cipher == "shift":
+        key,cts = shift_encrypt_batch_multikey(pts,labels,num_classes)
+    elif cipher == "rotate":
+        key,cts = rotate_encrypt_batch_multikey(pts,labels,num_classes)
+    elif cipher == "affine":
+        key,cts = affine_encrypt_batch_multikey(pts,labels,num_classes)
+    elif cipher == "vignere":
+        key,cts = vigenere_like_multikey_encrypt_batch(pts,labels,num_classes)
+    elif cipher == "vignere-auto":
+        key,cts = vigenere_autokey_encrypt_batch(pts,labels,num_classes)
     elif cipher =="caesar":
         key,cts = caesar_encrypt_batch(pts)
     elif cipher=="sbox":
-        key,cts = substitution_encrypt_batch(pts)
+        key,cts = substitution_encrypt_batch(pts,labels,num_classes)
     else:
         raise ValueError("Unknown cipher")
 
@@ -70,7 +80,12 @@ def run_experiment(cipher, device="cpu", epochs=5, batch_size=256):
     print(f"[{cipher}] Final MI estimate: {final_mi:.6f}\n")
 
     # 2. Train classifier on train set
-    clf = Classifier(pt_dim, ct_dim, hidden=256, num_classes=num_classes).to(device)
+    if args.model == "linear":
+        clf = LinearClassifier(pt_dim, ct_dim, num_classes=num_classes).to(device)
+    # elif args.model == "nonlinear":
+    #     clf = NonLinearClassifier(pt_len, ct_len,num_classes=num_classes).to(device)
+    else:
+        clf = Classifier(pt_dim, ct_dim, hidden=256, num_classes=num_classes).to(device)
     print("[+] Training classifier (IND-CPA test) ...")
     clf = train_classifier(clf, train_ds, device=device, epochs=epochs, batch_size=batch_size)
 
@@ -92,9 +107,13 @@ def run_experiment(cipher, device="cpu", epochs=5, batch_size=256):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--cipher", type=str, default="xor",
-                        choices=["aes-ecb", "aes-ctr", "aes-ctr-reduced", "des","xor","caesar","sbox"])
-    parser.add_argument("--epochs", type=int, default=20)
+                        choices=["aes-ecb","affine","vignere","vignere-auto"
+                                  "aes-ctr", "aes-ctr-reduced", "des","xor","caesar","sbox","shift","rotate"])
+    parser.add_argument("--epochs", type=int, default=5)
     parser.add_argument("--batch_size", type=int, default=256)
+    parser.add_argument("--model", type=str, default="mlp", choices=["mlp", "linear","nonlinear"],
+                    help="Which classifier to use: mlp or linear")
+
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
