@@ -473,3 +473,44 @@ def encrypt_variant(name: str, keys, plaintext: bytes) -> bytes:
         return semi_partial_key_rotation(keys.get('XOR', b'\x55\xAA\x33'), plaintext, window=3)
     else:
         raise ValueError(f"Unknown system: {name}")
+    
+def get_all_systems():
+    """
+    Return a list of all supported encryption system names in encrypt_variant().
+    Used by indcpa.py to iterate over all systems automatically.
+    """
+    return [
+        # Diagnostic / toy systems
+        'No Encryption',
+        'One-Time Pad',
+        'Constant XOR',
+        'Toy Fixed XOR',
+        'Toy Substitution',
+        'Toy Permutation',
+        'Toy 1-Round Feistel',
+        'AES CTR Fixed Nonce',
+
+        # Real ciphers
+        'DES',
+        'DES NonDet',
+        'AES ECB',
+        'AES CTR',
+        'AES CTR Reduced',
+        'RSA Plain',
+        'RSA OAEP',
+        'RSA OAEP Reused',
+
+        # Additional toy and semi-weak systems
+        'Toy Caesar',
+        'Toy Repeating XOR',
+        'Toy Byte Rotate',
+        'Toy Mask HighNibble',
+        'Toy LFSR Stream',
+        'Toy 2-Round Feistel',
+        'Semi Reduced Feistel',
+        'Semi Partial Mask',
+        'Semi Truncated AES',
+        'Semi Nonce Mix',
+        'Semi LFSR Long',
+        'Semi Key Rotation'
+    ]

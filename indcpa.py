@@ -75,6 +75,94 @@ def make_indcpa_dataset(n_samples: int, msg_len: int, keys, cipher_name: str):
     
     return X, y
 
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+class MLClassifier:
+    """
+    Drop-in replacement for neural IND-CPA classifier.
+    Supports Logistic Regression or Random Forest backends.
+    """
+    def __init__(self, input_dim=None, model_type="logistic", **kwargs):
+        """
+        Args:
+            input_dim: unused (for API compatibility)
+            model_type: "logistic" or "rf"
+            kwargs: passed directly to sklearn model
+        """
+        if model_type == "rf":
+            self.model = RandomForestClassifier(
+                n_estimators=kwargs.get("n_estimators", 100),
+                max_depth=kwargs.get("max_depth", 8),
+                n_jobs=-1,
+                random_state=42
+            )
+        else:
+            self.model = LogisticRegression(
+                max_iter=kwargs.get("max_iter", 500),
+                solver=kwargs.get("solver", "lbfgs"),
+                n_jobs=-1
+            )
+
+    def fit(self, X, y, epochs=None, batch_size=None, lr=None, device=None):
+        """Mimics train_classifier() signature; ignores DL args."""
+        self.model.fit(X, y)
+
+    def evaluate(self, X, y):
+        """Returns (accuracy, predictions)."""
+        preds = self.model.predict(X)
+        acc = accuracy_score(y, preds)
+        return acc, preds
+
+import numpy as np
+from sklearn.feature_selection import mutual_info_regression
+from sklearn.metrics import mutual_info_score
+
+class MLMIEstimator:
+    """
+    Classical Mutual Information estimator (non-neural).
+    Supports 'knn' (mutual_info_regression) and 'kde' (histogram) modes.
+    """
+    def __init__(self, method="knn", **kwargs):
+        self.method = method
+        self.kwargs = kwargs
+        self.mi_value = None
+
+    def estimate(self, X_plain, X_cipher):
+        """
+        Estimate mutual information between plaintext and ciphertext samples.
+        Args:
+            X_plain: np.ndarray (N × d_p)
+            X_cipher: np.ndarray (N × d_c)
+        Returns:
+            float: estimated MI
+        """
+        if self.method == "knn":
+            # average over plaintext dimensions
+            mis = []
+            for i in range(X_plain.shape[1]):
+                mi = mutual_info_regression(X_cipher, X_plain[:, i], discrete_features=False)
+                mis.append(np.mean(mi))
+            self.mi_value = float(np.mean(mis))
+
+        elif self.method == "kde":
+            # flatten to 1D histograms for simplicity
+            x = X_plain.flatten()
+            y = X_cipher.flatten()
+            c_xy = np.histogram2d(x, y, bins=self.kwargs.get("bins", 32))[0]
+            self.mi_value = float(mutual_info_score(None, None, contingency=c_xy))
+
+        else:
+            raise ValueError(f"Unknown MI method: {self.method}")
+
+        return self.mi_value
+
+    def get_value(self):
+        """Return the last computed MI."""
+        return self.mi_value
+
 
 class ClassifierNet(nn.Module):
     """Your original classifier architecture"""
@@ -90,18 +178,22 @@ class ClassifierNet(nn.Module):
     def forward(self, x):
         return self.net(x)
 
+from sklearn.model_selection import train_test_split
 
 def train_classifier(X: np.ndarray, y: np.ndarray, device: str = None,
                     epochs: int = 20, batch_size: int = 256, lr: float = 1e-3) -> Tuple[nn.Module, float]:
     """Your original training procedure"""
     device = device or ('cuda' if torch.cuda.is_available() else 'cpu')
-    
-    X_t = torch.tensor(X, dtype=torch.float32)
-    y_t = torch.tensor(y, dtype=torch.long)
+    X_train ,X_test, y_train ,y_test = train_test_split(X,y,test_size=0.2)
+    X_t = torch.tensor(X_train, dtype=torch.float32)
+    y_t = torch.tensor(y_train, dtype=torch.long)
+
+    X_t1 = torch.tensor(X_test, dtype=torch.float32)
+    y_t1 = torch.tensor(y_test, dtype=torch.long)
     ds = TensorDataset(X_t, y_t)
     loader = DataLoader(ds, batch_size=batch_size, shuffle=True)
 
-    model = ClassifierNet(input_dim=X.shape[1]).to(device)
+    model = TinyClassifier(input_dim=X.shape[1]).to(device)
     opt = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
     loss_fn = nn.CrossEntropyLoss()
 
@@ -120,9 +212,9 @@ def train_classifier(X: np.ndarray, y: np.ndarray, device: str = None,
     # Evaluate
     model.eval()
     with torch.no_grad():
-        logits = model(X_t.to(device))
+        logits = model(X_t1.to(device))
         preds = logits.argmax(dim=1).cpu().numpy()
-    acc = (preds == y).mean()
+    acc = (preds == y_t1.cpu()).float().mean()
     
     return model, acc
 
@@ -130,7 +222,41 @@ def train_classifier(X: np.ndarray, y: np.ndarray, device: str = None,
 # -------------------------
 # PAPER'S MINE Implementation (Equation 1)
 # -------------------------
+class TinyClassifier(nn.Module):
+    """
+    Very small MLP for IND-CPA tests.
+    ~8k parameters, works well for small inputs (like 64–256 bits).
+    """
+    def __init__(self, input_dim: int, hidden: int = 128):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(input_dim, hidden),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(hidden, 2)
+        )
+    
+    def forward(self, x):
+        return self.net(x)
+class TinyMINE(nn.Module):
+    """
+    Lightweight MINE estimator — 2 layers × 64 neurons.
+    Suitable for small ciphers and CPU-only edge devices.
+    """
+    def __init__(self, dim_m: int, dim_c: int, hidden: int = 64):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(dim_m + dim_c, hidden),
+            nn.ELU(),
+            nn.Linear(hidden, hidden),
+            nn.ELU(),
+            nn.Linear(hidden, 1)
+        )
 
+    def forward(self, m, c):
+        x = torch.cat([m, c], dim=1)
+        return self.net(x)
+    
 class MineNet(nn.Module):
     """
     Exact paper architecture:
@@ -162,7 +288,7 @@ class MINE:
     """
     def __init__(self, dim_m: int, dim_c: int, device: str = None, lr: float = 1e-4):
         self.device = device or ('cuda' if torch.cuda.is_available() else 'cpu')
-        self.net = MineNet(dim_m, dim_c, hidden=100).to(self.device)
+        self.net = TinyMINE(dim_m, dim_c, hidden=100).to(self.device)
         self.opt = optim.Adam(self.net.parameters(), lr=lr, weight_decay=1e-5)
 
     def estimate_mi(self, M: np.ndarray, C: np.ndarray,
@@ -277,6 +403,9 @@ def run_experiment(
         epochs=indcpa_epochs,
         lr=1e-3
     )
+    # model = MLClassifier(model_type="logistic")  # or "logistic"
+    # model.fit(X_cls, y_cls)
+    # acc, _ = model.evaluate(X_test, y_test)
     
     advantage = 2.0 * (acc - 0.5)
     print(f"✓ Classifier accuracy: {acc:.4f}")
@@ -337,10 +466,40 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     keys = generate_keys()
-    systems_to_test = [
-        
-        'Semi Nonce Mix'
-       
+    systems_to_test =[
+        # Diagnostic / toy systems
+        'No Encryption',
+        'One-Time Pad',
+        'Constant XOR',
+        'Toy Fixed XOR',
+        'Toy Substitution',
+        'Toy Permutation',
+        'Toy 1-Round Feistel',
+        'AES CTR Fixed Nonce',
+
+        # Real ciphers
+        'DES',
+        'DES NonDet',
+        'AES ECB',
+        'AES CTR',
+        'AES CTR Reduced',
+        'RSA Plain',
+        'RSA OAEP',
+        'RSA OAEP Reused',
+
+        # Additional toy and semi-weak systems
+        'Toy Caesar',
+        'Toy Repeating XOR',
+        'Toy Byte Rotate',
+        'Toy Mask HighNibble',
+        'Toy LFSR Stream',
+        'Toy 2-Round Feistel',
+        'Semi Reduced Feistel',
+        'Semi Partial Mask',
+        'Semi Truncated AES',
+        'Semi Nonce Mix',
+        'Semi LFSR Long',
+        'Semi Key Rotation'
     ]
 
     results_summary = []
