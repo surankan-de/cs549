@@ -1,0 +1,678 @@
+
+============================================================
+Testing: No Encryption
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0035 nats
+[MINE] epoch 11/100  I(M;C) = 0.2368 nats
+[MINE] epoch 21/100  I(M;C) = 2.1107 nats
+[MINE] epoch 31/100  I(M;C) = 4.0676 nats
+[MINE] epoch 41/100  I(M;C) = 5.3039 nats
+[MINE] epoch 51/100  I(M;C) = 6.4424 nats
+[MINE] epoch 61/100  I(M;C) = 7.0909 nats
+[MINE] epoch 71/100  I(M;C) = 7.1341 nats
+[MINE] epoch 81/100  I(M;C) = 7.4034 nats
+[MINE] epoch 91/100  I(M;C) = 8.6539 nats
+✓ Estimated I(M;C) ≈ 10.076445 nats (14.54 bits)
+
+============================================================
+Testing: One-Time Pad
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.5023
+✓ IND-CPA advantage ε = 0.0045
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0014 nats
+[MINE] epoch 11/100  I(M;C) = -0.0001 nats
+[MINE] epoch 21/100  I(M;C) = 0.0001 nats
+[MINE] epoch 31/100  I(M;C) = 0.0003 nats
+[MINE] epoch 41/100  I(M;C) = 0.0007 nats
+[MINE] epoch 51/100  I(M;C) = 0.0011 nats
+[MINE] epoch 61/100  I(M;C) = 0.0014 nats
+[MINE] epoch 71/100  I(M;C) = 0.0014 nats
+[MINE] epoch 81/100  I(M;C) = 0.0021 nats
+[MINE] epoch 91/100  I(M;C) = 0.0021 nats
+✓ Estimated I(M;C) ≈ 0.002617 nats (0.00 bits)
+
+============================================================
+Testing: Constant XOR
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.9998
+✓ IND-CPA advantage ε = 0.9995
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0015 nats
+[MINE] epoch 11/100  I(M;C) = 0.1885 nats
+[MINE] epoch 21/100  I(M;C) = 1.7148 nats
+[MINE] epoch 31/100  I(M;C) = 3.4650 nats
+[MINE] epoch 41/100  I(M;C) = 4.4690 nats
+[MINE] epoch 51/100  I(M;C) = 5.2599 nats
+[MINE] epoch 61/100  I(M;C) = 5.5136 nats
+[MINE] epoch 71/100  I(M;C) = 5.8676 nats
+[MINE] epoch 81/100  I(M;C) = 6.6982 nats
+[MINE] epoch 91/100  I(M;C) = 6.3844 nats
+✓ Estimated I(M;C) ≈ 7.525772 nats (10.86 bits)
+
+============================================================
+Testing: Toy Fixed XOR
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0030 nats
+[MINE] epoch 11/100  I(M;C) = 0.2704 nats
+[MINE] epoch 21/100  I(M;C) = 2.3491 nats
+[MINE] epoch 31/100  I(M;C) = 4.6399 nats
+[MINE] epoch 41/100  I(M;C) = 6.1867 nats
+[MINE] epoch 51/100  I(M;C) = 7.0465 nats
+[MINE] epoch 61/100  I(M;C) = 8.3898 nats
+[MINE] epoch 71/100  I(M;C) = 8.7787 nats
+[MINE] epoch 81/100  I(M;C) = 7.9280 nats
+[MINE] epoch 91/100  I(M;C) = 6.9545 nats
+✓ Estimated I(M;C) ≈ 10.998440 nats (15.87 bits)
+
+============================================================
+Testing: Toy Substitution
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0015 nats
+[MINE] epoch 11/100  I(M;C) = 0.0008 nats
+[MINE] epoch 21/100  I(M;C) = 0.0024 nats
+[MINE] epoch 31/100  I(M;C) = 0.0051 nats
+[MINE] epoch 41/100  I(M;C) = 0.0083 nats
+[MINE] epoch 51/100  I(M;C) = 0.0143 nats
+[MINE] epoch 61/100  I(M;C) = 0.0225 nats
+[MINE] epoch 71/100  I(M;C) = 0.0334 nats
+[MINE] epoch 81/100  I(M;C) = 0.0487 nats
+[MINE] epoch 91/100  I(M;C) = 0.0646 nats
+✓ Estimated I(M;C) ≈ 0.071932 nats (0.10 bits)
+
+============================================================
+Testing: Toy Permutation
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0048 nats
+[MINE] epoch 11/100  I(M;C) = 0.2901 nats
+[MINE] epoch 21/100  I(M;C) = 2.4809 nats
+[MINE] epoch 31/100  I(M;C) = 4.8491 nats
+[MINE] epoch 41/100  I(M;C) = 6.3249 nats
+[MINE] epoch 51/100  I(M;C) = 7.4474 nats
+[MINE] epoch 61/100  I(M;C) = 6.7700 nats
+[MINE] epoch 71/100  I(M;C) = 8.6408 nats
+[MINE] epoch 81/100  I(M;C) = 9.9235 nats
+[MINE] epoch 91/100  I(M;C) = 10.4756 nats
+✓ Estimated I(M;C) ≈ 8.608506 nats (12.42 bits)
+
+============================================================
+Testing: Toy 1-Round Feistel
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0022 nats
+[MINE] epoch 11/100  I(M;C) = 0.0969 nats
+[MINE] epoch 21/100  I(M;C) = 1.0646 nats
+[MINE] epoch 31/100  I(M;C) = 2.6826 nats
+[MINE] epoch 41/100  I(M;C) = 3.8546 nats
+[MINE] epoch 51/100  I(M;C) = 4.4569 nats
+[MINE] epoch 61/100  I(M;C) = 5.0452 nats
+[MINE] epoch 71/100  I(M;C) = 5.3115 nats
+[MINE] epoch 81/100  I(M;C) = 6.0725 nats
+[MINE] epoch 91/100  I(M;C) = 5.8760 nats
+✓ Estimated I(M;C) ≈ 6.579014 nats (9.49 bits)
+
+============================================================
+Testing: AES CTR Fixed Nonce
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0070 nats
+[MINE] epoch 11/100  I(M;C) = 0.1771 nats
+[MINE] epoch 21/100  I(M;C) = 1.5913 nats
+[MINE] epoch 31/100  I(M;C) = 3.2225 nats
+[MINE] epoch 41/100  I(M;C) = 4.3185 nats
+[MINE] epoch 51/100  I(M;C) = 5.0185 nats
+[MINE] epoch 61/100  I(M;C) = 5.4519 nats
+[MINE] epoch 71/100  I(M;C) = 6.2030 nats
+[MINE] epoch 81/100  I(M;C) = 6.0159 nats
+[MINE] epoch 91/100  I(M;C) = 7.0183 nats
+✓ Estimated I(M;C) ≈ 6.960228 nats (10.04 bits)
+
+============================================================
+Testing: DES
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.9952
+✓ IND-CPA advantage ε = 0.9905
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0013 nats
+[MINE] epoch 11/100  I(M;C) = 0.0001 nats
+[MINE] epoch 21/100  I(M;C) = -0.0002 nats
+[MINE] epoch 31/100  I(M;C) = 0.0001 nats
+[MINE] epoch 41/100  I(M;C) = 0.0003 nats
+[MINE] epoch 51/100  I(M;C) = 0.0004 nats
+[MINE] epoch 61/100  I(M;C) = 0.0005 nats
+[MINE] epoch 71/100  I(M;C) = 0.0008 nats
+[MINE] epoch 81/100  I(M;C) = 0.0006 nats
+[MINE] epoch 91/100  I(M;C) = 0.0014 nats
+✓ Estimated I(M;C) ≈ 0.001375 nats (0.00 bits)
+
+============================================================
+Testing: DES NonDet
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.5025
+✓ IND-CPA advantage ε = 0.0050
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0019 nats
+[MINE] epoch 11/100  I(M;C) = -0.0003 nats
+[MINE] epoch 21/100  I(M;C) = -0.0000 nats
+[MINE] epoch 31/100  I(M;C) = 0.0000 nats
+[MINE] epoch 41/100  I(M;C) = 0.0001 nats
+[MINE] epoch 51/100  I(M;C) = 0.0005 nats
+[MINE] epoch 61/100  I(M;C) = 0.0004 nats
+[MINE] epoch 71/100  I(M;C) = 0.0006 nats
+[MINE] epoch 81/100  I(M;C) = 0.0008 nats
+[MINE] epoch 91/100  I(M;C) = 0.0010 nats
+✓ Estimated I(M;C) ≈ 0.000889 nats (0.00 bits)
+
+============================================================
+Testing: AES ECB
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0017 nats
+[MINE] epoch 11/100  I(M;C) = -0.0000 nats
+[MINE] epoch 21/100  I(M;C) = 0.0001 nats
+[MINE] epoch 31/100  I(M;C) = 0.0005 nats
+[MINE] epoch 41/100  I(M;C) = 0.0008 nats
+[MINE] epoch 51/100  I(M;C) = 0.0009 nats
+[MINE] epoch 61/100  I(M;C) = 0.0012 nats
+[MINE] epoch 71/100  I(M;C) = 0.0018 nats
+[MINE] epoch 81/100  I(M;C) = 0.0020 nats
+[MINE] epoch 91/100  I(M;C) = 0.0022 nats
+✓ Estimated I(M;C) ≈ 0.002788 nats (0.00 bits)
+
+============================================================
+Testing: AES CTR
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.4900
+✓ IND-CPA advantage ε = -0.0200
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0020 nats
+[MINE] epoch 11/100  I(M;C) = -0.0002 nats
+[MINE] epoch 21/100  I(M;C) = 0.0003 nats
+[MINE] epoch 31/100  I(M;C) = 0.0005 nats
+[MINE] epoch 41/100  I(M;C) = 0.0008 nats
+[MINE] epoch 51/100  I(M;C) = 0.0010 nats
+[MINE] epoch 61/100  I(M;C) = 0.0015 nats
+[MINE] epoch 71/100  I(M;C) = 0.0017 nats
+[MINE] epoch 81/100  I(M;C) = 0.0020 nats
+[MINE] epoch 91/100  I(M;C) = 0.0026 nats
+✓ Estimated I(M;C) ≈ 0.003074 nats (0.00 bits)
+
+============================================================
+Testing: AES CTR Reduced
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.9837
+✓ IND-CPA advantage ε = 0.9675
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0015 nats
+[MINE] epoch 11/100  I(M;C) = -0.0001 nats
+[MINE] epoch 21/100  I(M;C) = 0.0002 nats
+[MINE] epoch 31/100  I(M;C) = 0.0003 nats
+[MINE] epoch 41/100  I(M;C) = 0.0004 nats
+[MINE] epoch 51/100  I(M;C) = 0.0006 nats
+[MINE] epoch 61/100  I(M;C) = 0.0005 nats
+[MINE] epoch 71/100  I(M;C) = 0.0008 nats
+[MINE] epoch 81/100  I(M;C) = 0.0012 nats
+[MINE] epoch 91/100  I(M;C) = 0.0015 nats
+✓ Estimated I(M;C) ≈ 0.001959 nats (0.00 bits)
+
+============================================================
+Testing: RSA Plain
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0035 nats
+[MINE] epoch 11/100  I(M;C) = 0.0000 nats
+[MINE] epoch 21/100  I(M;C) = 0.0009 nats
+[MINE] epoch 31/100  I(M;C) = 0.0020 nats
+[MINE] epoch 41/100  I(M;C) = 0.0030 nats
+[MINE] epoch 51/100  I(M;C) = 0.0048 nats
+[MINE] epoch 61/100  I(M;C) = 0.0068 nats
+[MINE] epoch 71/100  I(M;C) = 0.0109 nats
+[MINE] epoch 81/100  I(M;C) = 0.0167 nats
+[MINE] epoch 91/100  I(M;C) = 0.0280 nats
+✓ Estimated I(M;C) ≈ 0.044024 nats (0.06 bits)
+
+============================================================
+Testing: RSA OAEP
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.5140
+✓ IND-CPA advantage ε = 0.0280
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0033 nats
+[MINE] epoch 11/100  I(M;C) = 0.0003 nats
+[MINE] epoch 21/100  I(M;C) = 0.0016 nats
+[MINE] epoch 31/100  I(M;C) = 0.0025 nats
+[MINE] epoch 41/100  I(M;C) = 0.0039 nats
+[MINE] epoch 51/100  I(M;C) = 0.0062 nats
+[MINE] epoch 61/100  I(M;C) = 0.0092 nats
+[MINE] epoch 71/100  I(M;C) = 0.0144 nats
+[MINE] epoch 81/100  I(M;C) = 0.0229 nats
+[MINE] epoch 91/100  I(M;C) = 0.0389 nats
+✓ Estimated I(M;C) ≈ 0.061388 nats (0.09 bits)
+
+============================================================
+Testing: RSA OAEP Reused
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0022 nats
+[MINE] epoch 11/100  I(M;C) = 0.0003 nats
+[MINE] epoch 21/100  I(M;C) = 0.0013 nats
+[MINE] epoch 31/100  I(M;C) = 0.0024 nats
+[MINE] epoch 41/100  I(M;C) = 0.0035 nats
+[MINE] epoch 51/100  I(M;C) = 0.0055 nats
+[MINE] epoch 61/100  I(M;C) = 0.0083 nats
+[MINE] epoch 71/100  I(M;C) = 0.0130 nats
+[MINE] epoch 81/100  I(M;C) = 0.0206 nats
+[MINE] epoch 91/100  I(M;C) = 0.0346 nats
+✓ Estimated I(M;C) ≈ 0.053610 nats (0.08 bits)
+
+============================================================
+Testing: Toy Caesar
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0014 nats
+[MINE] epoch 11/100  I(M;C) = 0.0565 nats
+[MINE] epoch 21/100  I(M;C) = 0.4739 nats
+[MINE] epoch 31/100  I(M;C) = 1.6014 nats
+[MINE] epoch 41/100  I(M;C) = 2.2335 nats
+[MINE] epoch 51/100  I(M;C) = 2.6337 nats
+[MINE] epoch 61/100  I(M;C) = 2.9506 nats
+[MINE] epoch 71/100  I(M;C) = 3.1922 nats
+[MINE] epoch 81/100  I(M;C) = 2.7481 nats
+[MINE] epoch 91/100  I(M;C) = 3.2368 nats
+✓ Estimated I(M;C) ≈ 3.563090 nats (5.14 bits)
+
+============================================================
+Testing: Toy Repeating XOR
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0041 nats
+[MINE] epoch 11/100  I(M;C) = 0.1506 nats
+[MINE] epoch 21/100  I(M;C) = 1.5398 nats
+[MINE] epoch 31/100  I(M;C) = 3.2708 nats
+[MINE] epoch 41/100  I(M;C) = 4.3297 nats
+[MINE] epoch 51/100  I(M;C) = 5.0404 nats
+[MINE] epoch 61/100  I(M;C) = 5.3631 nats
+[MINE] epoch 71/100  I(M;C) = 6.1048 nats
+[MINE] epoch 81/100  I(M;C) = 6.1616 nats
+[MINE] epoch 91/100  I(M;C) = 7.0173 nats
+✓ Estimated I(M;C) ≈ 6.829010 nats (9.85 bits)
+
+============================================================
+Testing: Toy Byte Rotate
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0021 nats
+[MINE] epoch 11/100  I(M;C) = 0.0022 nats
+[MINE] epoch 21/100  I(M;C) = 0.0050 nats
+[MINE] epoch 31/100  I(M;C) = 0.0098 nats
+[MINE] epoch 41/100  I(M;C) = 0.0186 nats
+[MINE] epoch 51/100  I(M;C) = 0.0330 nats
+[MINE] epoch 61/100  I(M;C) = 0.0534 nats
+[MINE] epoch 71/100  I(M;C) = 0.0832 nats
+[MINE] epoch 81/100  I(M;C) = 0.1149 nats
+[MINE] epoch 91/100  I(M;C) = 0.1352 nats
+✓ Estimated I(M;C) ≈ 0.147007 nats (0.21 bits)
+
+============================================================
+Testing: Toy Mask HighNibble
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0046 nats
+[MINE] epoch 11/100  I(M;C) = 0.3173 nats
+[MINE] epoch 21/100  I(M;C) = 2.6323 nats
+[MINE] epoch 31/100  I(M;C) = 4.9459 nats
+[MINE] epoch 41/100  I(M;C) = 6.3602 nats
+[MINE] epoch 51/100  I(M;C) = 6.6099 nats
+[MINE] epoch 61/100  I(M;C) = 8.4772 nats
+[MINE] epoch 71/100  I(M;C) = 7.0590 nats
+[MINE] epoch 81/100  I(M;C) = 9.6645 nats
+[MINE] epoch 91/100  I(M;C) = 9.4004 nats
+✓ Estimated I(M;C) ≈ 10.677021 nats (15.40 bits)
+
+============================================================
+Testing: Toy LFSR Stream
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.9985
+✓ IND-CPA advantage ε = 0.9970
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0021 nats
+[MINE] epoch 11/100  I(M;C) = 0.1022 nats
+[MINE] epoch 21/100  I(M;C) = 1.0589 nats
+[MINE] epoch 31/100  I(M;C) = 2.4190 nats
+[MINE] epoch 41/100  I(M;C) = 3.2572 nats
+[MINE] epoch 51/100  I(M;C) = 3.7283 nats
+[MINE] epoch 61/100  I(M;C) = 4.0641 nats
+[MINE] epoch 71/100  I(M;C) = 4.3824 nats
+[MINE] epoch 81/100  I(M;C) = 4.6777 nats
+[MINE] epoch 91/100  I(M;C) = 4.7919 nats
+✓ Estimated I(M;C) ≈ 4.853591 nats (7.00 bits)
+
+============================================================
+Testing: Toy 2-Round Feistel
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.9973
+✓ IND-CPA advantage ε = 0.9945
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0011 nats
+[MINE] epoch 11/100  I(M;C) = 0.0001 nats
+[MINE] epoch 21/100  I(M;C) = 0.0004 nats
+[MINE] epoch 31/100  I(M;C) = 0.0007 nats
+[MINE] epoch 41/100  I(M;C) = 0.0009 nats
+[MINE] epoch 51/100  I(M;C) = 0.0012 nats
+[MINE] epoch 61/100  I(M;C) = 0.0014 nats
+[MINE] epoch 71/100  I(M;C) = 0.0020 nats
+[MINE] epoch 81/100  I(M;C) = 0.0023 nats
+[MINE] epoch 91/100  I(M;C) = 0.0027 nats
+✓ Estimated I(M;C) ≈ 0.003166 nats (0.00 bits)
+
+============================================================
+Testing: Semi Reduced Feistel
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.9975
+✓ IND-CPA advantage ε = 0.9950
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0012 nats
+[MINE] epoch 11/100  I(M;C) = 0.0001 nats
+[MINE] epoch 21/100  I(M;C) = 0.0001 nats
+[MINE] epoch 31/100  I(M;C) = 0.0005 nats
+[MINE] epoch 41/100  I(M;C) = 0.0009 nats
+[MINE] epoch 51/100  I(M;C) = 0.0011 nats
+[MINE] epoch 61/100  I(M;C) = 0.0011 nats
+[MINE] epoch 71/100  I(M;C) = 0.0016 nats
+[MINE] epoch 81/100  I(M;C) = 0.0017 nats
+[MINE] epoch 91/100  I(M;C) = 0.0026 nats
+✓ Estimated I(M;C) ≈ 0.002686 nats (0.00 bits)
+
+============================================================
+Testing: Semi Partial Mask
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0030 nats
+[MINE] epoch 11/100  I(M;C) = 0.2773 nats
+[MINE] epoch 21/100  I(M;C) = 2.3582 nats
+[MINE] epoch 31/100  I(M;C) = 4.5506 nats
+[MINE] epoch 41/100  I(M;C) = 5.9525 nats
+[MINE] epoch 51/100  I(M;C) = 6.7877 nats
+[MINE] epoch 61/100  I(M;C) = 6.0126 nats
+[MINE] epoch 71/100  I(M;C) = 7.8515 nats
+[MINE] epoch 81/100  I(M;C) = 9.4304 nats
+[MINE] epoch 91/100  I(M;C) = 7.2188 nats
+✓ Estimated I(M;C) ≈ 10.851500 nats (15.66 bits)
+
+============================================================
+Testing: Semi Truncated AES
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.9985
+✓ IND-CPA advantage ε = 0.9970
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0020 nats
+[MINE] epoch 11/100  I(M;C) = 0.0837 nats
+[MINE] epoch 21/100  I(M;C) = 0.7880 nats
+[MINE] epoch 31/100  I(M;C) = 1.8486 nats
+[MINE] epoch 41/100  I(M;C) = 2.4659 nats
+[MINE] epoch 51/100  I(M;C) = 2.8981 nats
+[MINE] epoch 61/100  I(M;C) = 3.1029 nats
+[MINE] epoch 71/100  I(M;C) = 3.4052 nats
+[MINE] epoch 81/100  I(M;C) = 3.0708 nats
+[MINE] epoch 91/100  I(M;C) = 3.5480 nats
+✓ Estimated I(M;C) ≈ 3.732956 nats (5.39 bits)
+
+============================================================
+Testing: Semi Nonce Mix
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.9995
+✓ IND-CPA advantage ε = 0.9990
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = -0.0023 nats
+[MINE] epoch 11/100  I(M;C) = 0.0309 nats
+[MINE] epoch 21/100  I(M;C) = 0.3176 nats
+[MINE] epoch 31/100  I(M;C) = 1.7155 nats
+[MINE] epoch 41/100  I(M;C) = 2.7664 nats
+[MINE] epoch 51/100  I(M;C) = 3.3831 nats
+[MINE] epoch 61/100  I(M;C) = 3.8570 nats
+[MINE] epoch 71/100  I(M;C) = 4.3229 nats
+[MINE] epoch 81/100  I(M;C) = 4.4571 nats
+[MINE] epoch 91/100  I(M;C) = 4.8067 nats
+✓ Estimated I(M;C) ≈ 4.996222 nats (7.21 bits)
+
+============================================================
+Testing: Semi LFSR Long
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 0.9987
+✓ IND-CPA advantage ε = 0.9975
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0038 nats
+[MINE] epoch 11/100  I(M;C) = 0.1251 nats
+[MINE] epoch 21/100  I(M;C) = 1.1879 nats
+[MINE] epoch 31/100  I(M;C) = 2.6023 nats
+[MINE] epoch 41/100  I(M;C) = 3.4700 nats
+[MINE] epoch 51/100  I(M;C) = 4.0334 nats
+[MINE] epoch 61/100  I(M;C) = 4.3966 nats
+[MINE] epoch 71/100  I(M;C) = 4.7714 nats
+[MINE] epoch 81/100  I(M;C) = 5.0095 nats
+[MINE] epoch 91/100  I(M;C) = 5.4848 nats
+✓ Estimated I(M;C) ≈ 5.463562 nats (7.88 bits)
+
+============================================================
+Testing: Semi Key Rotation
+============================================================
+
+[Algorithm 2] Generating IND-CPA dataset...
+Training classifier...
+✓ Classifier accuracy: 1.0000
+✓ IND-CPA advantage ε = 1.0000
+
+[Algorithm 1] Generating samples for MINE...
+Training MINE estimator...
+[MINE] epoch 1/100  I(M;C) = 0.0016 nats
+[MINE] epoch 11/100  I(M;C) = 0.1828 nats
+[MINE] epoch 21/100  I(M;C) = 1.8004 nats
+[MINE] epoch 31/100  I(M;C) = 3.6305 nats
+[MINE] epoch 41/100  I(M;C) = 4.8559 nats
+[MINE] epoch 51/100  I(M;C) = 5.7801 nats
+[MINE] epoch 61/100  I(M;C) = 6.2560 nats
+[MINE] epoch 71/100  I(M;C) = 6.7184 nats
+[MINE] epoch 81/100  I(M;C) = 6.9279 nats
+[MINE] epoch 91/100  I(M;C) = 6.9106 nats
+✓ Estimated I(M;C) ≈ 6.586695 nats (9.50 bits)
+
+======================================================================
+FINAL SUMMARY
+======================================================================
+System                    | IND-CPA Acc  | MI Estimate 
+----------------------------------------------------------------------
+No Encryption             |       1.000 |     10.0764
+One-Time Pad              |       0.502 |      0.0026
+Constant XOR              |       1.000 |      7.5258
+Toy Fixed XOR             |       1.000 |     10.9984
+Toy Substitution          |       1.000 |      0.0719
+Toy Permutation           |       1.000 |      8.6085
+Toy 1-Round Feistel       |       1.000 |      6.5790
+AES CTR Fixed Nonce       |       1.000 |      6.9602
+DES                       |       0.995 |      0.0014
+DES NonDet                |       0.502 |      0.0009
+AES ECB                   |       1.000 |      0.0028
+AES CTR                   |       0.490 |      0.0031
+AES CTR Reduced           |       0.984 |      0.0020
+RSA Plain                 |       1.000 |      0.0440
+RSA OAEP                  |       0.514 |      0.0614
+RSA OAEP Reused           |       1.000 |      0.0536
+Toy Caesar                |       1.000 |      3.5631
+Toy Repeating XOR         |       1.000 |      6.8290
+Toy Byte Rotate           |       1.000 |      0.1470
+Toy Mask HighNibble       |       1.000 |     10.6770
+Toy LFSR Stream           |       0.998 |      4.8536
+Toy 2-Round Feistel       |       0.997 |      0.0032
+Semi Reduced Feistel      |       0.998 |      0.0027
+Semi Partial Mask         |       1.000 |     10.8515
+Semi Truncated AES        |       0.998 |      3.7330
+Semi Nonce Mix            |       0.999 |      4.9962
+Semi LFSR Long            |       0.999 |      5.4636
+Semi Key Rotation         |       1.000 |      6.5867

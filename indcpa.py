@@ -453,20 +453,7 @@ def run_experiment(
         "mine_history": history
     }
 
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--device", type=str, default=None)
-    parser.add_argument("--indcpa-samples", type=int, default=10000)
-    parser.add_argument("--mine-samples", type=int, default=10000,
-                       help="Paper uses 100,000 for training")
-    parser.add_argument("--indcpa-epochs", type=int, default=15)
-    parser.add_argument("--mine-epochs", type=int, default=100,
-                       help="Paper uses 1000 epochs")
-    args = parser.parse_args()
-
-    keys = generate_keys()
-    systems_to_test =[
+systems_to_test = [
         # Diagnostic / toy systems
         'No Encryption',
         'One-Time Pad',
@@ -501,6 +488,20 @@ if __name__ == "__main__":
         'Semi LFSR Long',
         'Semi Key Rotation'
     ]
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--device", type=str, default=None)
+    parser.add_argument("--indcpa-samples", type=int, default=10000)
+    parser.add_argument("--mine-samples", type=int, default=10000,
+                       help="Paper uses 100,000 for training")
+    parser.add_argument("--indcpa-epochs", type=int, default=15)
+    parser.add_argument("--mine-epochs", type=int, default=100,
+                       help="Paper uses 1000 epochs")
+    args = parser.parse_args()
+
+    keys = generate_keys()
+    
 
     results_summary = []
     for sysname in systems_to_test:

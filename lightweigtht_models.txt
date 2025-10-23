@@ -1,0 +1,280 @@
+
+Running benchmark for No Encryption with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.007 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.159 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.131 | inf_s=0.026 | size_bytes=35798
+gb_small     | acc=1.0000 | train_s=0.213 | inf_s=0.001 | size_bytes=69892
+knn3         | acc=1.0000 | train_s=0.000 | inf_s=0.023 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for One-Time Pad with 2000 samples per class
+logistic_l2  | acc=0.4738 | train_s=0.004 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.4662 | train_s=0.033 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.4725 | train_s=0.004 | inf_s=0.000 | size_bytes=728
+dtree        | acc=0.4713 | train_s=0.019 | inf_s=0.000 | size_bytes=7624
+rf_small     | acc=0.4875 | train_s=0.126 | inf_s=0.026 | size_bytes=792865
+gb_small     | acc=0.4500 | train_s=0.798 | inf_s=0.001 | size_bytes=139024
+knn3         | acc=0.5025 | train_s=0.000 | inf_s=0.005 | size_bytes=231077
+gaussian_nb  | acc=0.4662 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Constant XOR with 2000 samples per class
+logistic_l2  | acc=0.9988 | train_s=0.007 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.285 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=0.9988 | train_s=0.002 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.109 | inf_s=0.026 | size_bytes=46690
+gb_small     | acc=0.9988 | train_s=0.277 | inf_s=0.001 | size_bytes=85017
+knn3         | acc=0.9988 | train_s=0.000 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Toy Fixed XOR with 2000 samples per class
+logistic_l2  | acc=0.7662 | train_s=0.006 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.7662 | train_s=0.024 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.7588 | train_s=0.004 | inf_s=0.000 | size_bytes=728
+dtree        | acc=0.9988 | train_s=0.003 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.127 | inf_s=0.025 | size_bytes=54210
+gb_small     | acc=0.9988 | train_s=0.288 | inf_s=0.001 | size_bytes=85593
+knn3         | acc=1.0000 | train_s=0.000 | inf_s=0.005 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Toy Substitution with 2000 samples per class
+logistic_l2  | acc=0.9862 | train_s=0.006 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.9912 | train_s=0.182 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.9912 | train_s=0.004 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.114 | inf_s=0.027 | size_bytes=52930
+gb_small     | acc=1.0000 | train_s=0.265 | inf_s=0.001 | size_bytes=84583
+knn3         | acc=0.9950 | train_s=0.000 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Toy Permutation with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.005 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.153 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.102 | inf_s=0.026 | size_bytes=35798
+gb_small     | acc=1.0000 | train_s=0.210 | inf_s=0.001 | size_bytes=71623
+knn3         | acc=1.0000 | train_s=0.000 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Toy 1-Round Feistel with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.144 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.110 | inf_s=0.026 | size_bytes=36930
+gb_small     | acc=1.0000 | train_s=0.192 | inf_s=0.001 | size_bytes=70329
+knn3         | acc=1.0000 | train_s=0.000 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for AES CTR Fixed Nonce with 2000 samples per class
+logistic_l2  | acc=0.9962 | train_s=0.005 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.9975 | train_s=0.282 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=0.9988 | train_s=0.002 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.112 | inf_s=0.026 | size_bytes=46210
+gb_small     | acc=0.9988 | train_s=0.230 | inf_s=0.001 | size_bytes=83865
+knn3         | acc=0.9988 | train_s=0.000 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for DES with 2000 samples per class
+logistic_l2  | acc=0.9938 | train_s=0.007 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.9912 | train_s=0.327 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.9938 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.104 | inf_s=0.026 | size_bytes=48130
+gb_small     | acc=0.9988 | train_s=0.240 | inf_s=0.001 | size_bytes=85449
+knn3         | acc=0.9975 | train_s=0.000 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for DES NonDet with 2000 samples per class
+logistic_l2  | acc=0.4738 | train_s=0.003 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.4750 | train_s=0.028 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.4750 | train_s=0.004 | inf_s=0.000 | size_bytes=728
+dtree        | acc=0.5112 | train_s=0.016 | inf_s=0.000 | size_bytes=8584
+rf_small     | acc=0.4925 | train_s=0.134 | inf_s=0.026 | size_bytes=769342
+gb_small     | acc=0.4838 | train_s=0.785 | inf_s=0.001 | size_bytes=137008
+knn3         | acc=0.5275 | train_s=0.000 | inf_s=0.005 | size_bytes=231077
+gaussian_nb  | acc=0.5050 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for AES ECB with 2000 samples per class
+logistic_l2  | acc=0.9988 | train_s=0.007 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.9988 | train_s=0.271 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.9988 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.112 | inf_s=0.030 | size_bytes=48770
+gb_small     | acc=1.0000 | train_s=0.250 | inf_s=0.001 | size_bytes=83575
+knn3         | acc=1.0000 | train_s=0.001 | inf_s=0.005 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for AES CTR with 2000 samples per class
+logistic_l2  | acc=0.5012 | train_s=0.007 | inf_s=0.000 | size_bytes=975
+logistic_l1  | acc=0.5038 | train_s=0.056 | inf_s=0.000 | size_bytes=839
+linear_svc   | acc=0.5012 | train_s=0.008 | inf_s=0.000 | size_bytes=859
+dtree        | acc=0.5300 | train_s=0.036 | inf_s=0.000 | size_bytes=7624
+rf_small     | acc=0.4963 | train_s=0.145 | inf_s=0.027 | size_bytes=788708
+gb_small     | acc=0.5238 | train_s=1.509 | inf_s=0.001 | size_bytes=139024
+knn3         | acc=0.5100 | train_s=0.001 | inf_s=0.007 | size_bytes=435877
+gaussian_nb  | acc=0.5188 | train_s=0.001 | inf_s=0.000 | size_bytes=1638
+
+Running benchmark for AES CTR Reduced with 2000 samples per class
+logistic_l2  | acc=0.8938 | train_s=0.006 | inf_s=0.000 | size_bytes=975
+logistic_l1  | acc=0.9962 | train_s=1.091 | inf_s=0.000 | size_bytes=839
+linear_svc   | acc=0.9850 | train_s=0.003 | inf_s=0.000 | size_bytes=859
+dtree        | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=0.9888 | train_s=0.122 | inf_s=0.026 | size_bytes=428168
+gb_small     | acc=1.0000 | train_s=0.477 | inf_s=0.001 | size_bytes=86313
+knn3         | acc=0.5025 | train_s=0.000 | inf_s=0.004 | size_bytes=435877
+gaussian_nb  | acc=0.9875 | train_s=0.001 | inf_s=0.000 | size_bytes=1638
+
+Running benchmark for RSA Plain with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.243 | inf_s=0.037 | size_bytes=2769
+logistic_l1  | acc=1.0000 | train_s=9.731 | inf_s=0.000 | size_bytes=1740
+linear_svc   | acc=1.0000 | train_s=0.047 | inf_s=0.001 | size_bytes=2653
+dtree        | acc=1.0000 | train_s=0.026 | inf_s=0.001 | size_bytes=1381
+rf_small     | acc=1.0000 | train_s=0.113 | inf_s=0.027 | size_bytes=35084
+gb_small     | acc=1.0000 | train_s=2.578 | inf_s=0.001 | size_bytes=55668
+knn3         | acc=1.0000 | train_s=0.001 | inf_s=0.018 | size_bytes=3303079
+gaussian_nb  | acc=1.0000 | train_s=0.004 | inf_s=0.008 | size_bytes=8809
+
+Running benchmark for RSA OAEP with 2000 samples per class
+logistic_l2  | acc=0.5150 | train_s=0.558 | inf_s=0.006 | size_bytes=2769
+logistic_l1  | acc=0.5112 | train_s=1.639 | inf_s=0.000 | size_bytes=1740
+linear_svc   | acc=0.5138 | train_s=0.096 | inf_s=0.001 | size_bytes=2653
+dtree        | acc=0.5025 | train_s=0.248 | inf_s=0.000 | size_bytes=7147
+rf_small     | acc=0.5125 | train_s=0.198 | inf_s=0.027 | size_bytes=744471
+gb_small     | acc=0.5025 | train_s=10.895 | inf_s=0.002 | size_bytes=138321
+knn3         | acc=0.5025 | train_s=0.001 | inf_s=0.012 | size_bytes=3303079
+gaussian_nb  | acc=0.5150 | train_s=0.004 | inf_s=0.001 | size_bytes=8809
+
+Running benchmark for RSA OAEP Reused with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.266 | inf_s=0.001 | size_bytes=2769
+logistic_l1  | acc=1.0000 | train_s=9.528 | inf_s=0.001 | size_bytes=1740
+linear_svc   | acc=1.0000 | train_s=0.088 | inf_s=0.001 | size_bytes=2653
+dtree        | acc=1.0000 | train_s=0.024 | inf_s=0.000 | size_bytes=1544
+rf_small     | acc=1.0000 | train_s=0.111 | inf_s=0.026 | size_bytes=40391
+gb_small     | acc=1.0000 | train_s=2.769 | inf_s=0.001 | size_bytes=70342
+knn3         | acc=0.9975 | train_s=0.001 | inf_s=0.016 | size_bytes=3303079
+gaussian_nb  | acc=1.0000 | train_s=0.004 | inf_s=0.001 | size_bytes=8809
+
+Running benchmark for Toy Caesar with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.006 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.159 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.113 | inf_s=0.025 | size_bytes=44450
+gb_small     | acc=1.0000 | train_s=0.252 | inf_s=0.001 | size_bytes=84583
+knn3         | acc=1.0000 | train_s=0.002 | inf_s=0.005 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Toy Repeating XOR with 2000 samples per class
+logistic_l2  | acc=0.9975 | train_s=0.005 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.9988 | train_s=0.375 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.9988 | train_s=0.004 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.113 | inf_s=0.025 | size_bytes=47490
+gb_small     | acc=1.0000 | train_s=0.226 | inf_s=0.001 | size_bytes=85161
+knn3         | acc=0.9975 | train_s=0.000 | inf_s=0.003 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Toy Byte Rotate with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.150 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.105 | inf_s=0.026 | size_bytes=36450
+gb_small     | acc=1.0000 | train_s=0.209 | inf_s=0.001 | size_bytes=73065
+knn3         | acc=1.0000 | train_s=0.000 | inf_s=0.003 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Toy Mask HighNibble with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.163 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.113 | inf_s=0.025 | size_bytes=43650
+gb_small     | acc=1.0000 | train_s=0.152 | inf_s=0.001 | size_bytes=86457
+knn3         | acc=1.0000 | train_s=0.000 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Toy LFSR Stream with 2000 samples per class
+logistic_l2  | acc=0.9962 | train_s=0.006 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.362 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.114 | inf_s=0.025 | size_bytes=44930
+gb_small     | acc=1.0000 | train_s=0.216 | inf_s=0.001 | size_bytes=85449
+knn3         | acc=0.9975 | train_s=0.000 | inf_s=0.003 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Toy 2-Round Feistel with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.006 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.223 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.125 | inf_s=0.025 | size_bytes=40770
+gb_small     | acc=0.9988 | train_s=0.209 | inf_s=0.001 | size_bytes=69753
+knn3         | acc=1.0000 | train_s=0.000 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Semi Reduced Feistel with 2000 samples per class
+logistic_l2  | acc=0.9975 | train_s=0.005 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.9962 | train_s=0.144 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.9988 | train_s=0.005 | inf_s=0.000 | size_bytes=728
+dtree        | acc=0.9988 | train_s=0.002 | inf_s=0.000 | size_bytes=1701
+rf_small     | acc=1.0000 | train_s=0.113 | inf_s=0.026 | size_bytes=44930
+gb_small     | acc=1.0000 | train_s=0.238 | inf_s=0.001 | size_bytes=85735
+knn3         | acc=0.9988 | train_s=0.000 | inf_s=0.003 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Semi Partial Mask with 2000 samples per class
+logistic_l2  | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.146 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.101 | inf_s=0.026 | size_bytes=36450
+gb_small     | acc=1.0000 | train_s=0.256 | inf_s=0.001 | size_bytes=72055
+knn3         | acc=1.0000 | train_s=0.000 | inf_s=0.003 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Semi Truncated AES with 2000 samples per class
+logistic_l2  | acc=0.9950 | train_s=0.006 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=1.0000 | train_s=0.248 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.9988 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.110 | inf_s=0.025 | size_bytes=44130
+gb_small     | acc=1.0000 | train_s=0.210 | inf_s=0.001 | size_bytes=68601
+knn3         | acc=0.9988 | train_s=0.000 | inf_s=0.003 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Semi Nonce Mix with 2000 samples per class
+logistic_l2  | acc=0.9925 | train_s=0.005 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.9988 | train_s=0.113 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.9988 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.113 | inf_s=0.026 | size_bytes=51179
+gb_small     | acc=1.0000 | train_s=0.359 | inf_s=0.001 | size_bytes=71913
+knn3         | acc=0.9775 | train_s=0.001 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Semi LFSR Long with 2000 samples per class
+logistic_l2  | acc=0.9975 | train_s=0.007 | inf_s=0.001 | size_bytes=844
+logistic_l1  | acc=0.9975 | train_s=0.351 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=0.9975 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.109 | inf_s=0.026 | size_bytes=46050
+gb_small     | acc=1.0000 | train_s=0.224 | inf_s=0.001 | size_bytes=71337
+knn3         | acc=1.0000 | train_s=0.001 | inf_s=0.004 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126
+
+Running benchmark for Semi Key Rotation with 2000 samples per class
+logistic_l2  | acc=0.9988 | train_s=0.005 | inf_s=0.000 | size_bytes=844
+logistic_l1  | acc=0.9988 | train_s=0.139 | inf_s=0.000 | size_bytes=775
+linear_svc   | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=728
+dtree        | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=1541
+rf_small     | acc=1.0000 | train_s=0.100 | inf_s=0.026 | size_bytes=41410
+gb_small     | acc=1.0000 | train_s=0.214 | inf_s=0.001 | size_bytes=72919
+knn3         | acc=1.0000 | train_s=0.000 | inf_s=0.003 | size_bytes=231077
+gaussian_nb  | acc=1.0000 | train_s=0.001 | inf_s=0.000 | size_bytes=1126

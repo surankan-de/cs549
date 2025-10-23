@@ -1,0 +1,196 @@
+
+Running heavy benchmark for No Encryption with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.454 | inf_s=0.000 | size_bytes=137981
+hgb          | acc=1.0000 | train_s=0.175 | inf_s=0.000 | size_bytes=274419
+svc_rbf      | acc=1.0000 | train_s=0.007 | inf_s=0.000 | size_bytes=7885
+deep_mlp     | acc=1.0000 | train_s=1.525 | inf_s=0.000 | size_bytes=2698997
+cnn1d        | acc=1.0000 | train_s=1.313 | inf_s=0.000 | size_bytes=136166
+
+Running heavy benchmark for One-Time Pad with 2000 samples per class
+rf_large     | acc=0.5325 | train_s=0.494 | inf_s=0.000 | size_bytes=18253829
+hgb          | acc=0.5162 | train_s=0.364 | inf_s=0.000 | size_bytes=746228
+svc_rbf      | acc=0.5050 | train_s=0.202 | inf_s=0.000 | size_bytes=450125
+deep_mlp     | acc=0.5363 | train_s=0.762 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=0.4775 | train_s=0.791 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Constant XOR with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.423 | inf_s=0.000 | size_bytes=166527
+hgb          | acc=1.0000 | train_s=0.101 | inf_s=0.000 | size_bytes=122201
+svc_rbf      | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=4327
+deep_mlp     | acc=1.0000 | train_s=0.774 | inf_s=0.000 | size_bytes=2698997
+cnn1d        | acc=0.9988 | train_s=0.774 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Toy Fixed XOR with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.432 | inf_s=0.000 | size_bytes=166687
+hgb          | acc=1.0000 | train_s=0.085 | inf_s=0.000 | size_bytes=111507
+svc_rbf      | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=6257
+deep_mlp     | acc=1.0000 | train_s=0.916 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.790 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Toy Substitution with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.424 | inf_s=0.000 | size_bytes=202856
+hgb          | acc=1.0000 | train_s=0.217 | inf_s=0.000 | size_bytes=440444
+svc_rbf      | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=5363
+deep_mlp     | acc=1.0000 | train_s=0.773 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.767 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Toy Permutation with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.424 | inf_s=0.000 | size_bytes=140752
+hgb          | acc=1.0000 | train_s=0.190 | inf_s=0.000 | size_bytes=322699
+svc_rbf      | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=8033
+deep_mlp     | acc=1.0000 | train_s=0.664 | inf_s=0.000 | size_bytes=2698997
+cnn1d        | acc=1.0000 | train_s=0.691 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Toy 1-Round Feistel with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.423 | inf_s=0.000 | size_bytes=141709
+hgb          | acc=1.0000 | train_s=0.134 | inf_s=0.000 | size_bytes=226375
+svc_rbf      | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=4031
+deep_mlp     | acc=1.0000 | train_s=0.895 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.793 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for AES CTR Fixed Nonce with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.425 | inf_s=0.000 | size_bytes=149727
+hgb          | acc=1.0000 | train_s=0.102 | inf_s=0.000 | size_bytes=149974
+svc_rbf      | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=4031
+deep_mlp     | acc=1.0000 | train_s=0.882 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.759 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for DES with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.427 | inf_s=0.000 | size_bytes=151801
+hgb          | acc=1.0000 | train_s=0.096 | inf_s=0.000 | size_bytes=144038
+svc_rbf      | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=3439
+deep_mlp     | acc=1.0000 | train_s=0.652 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.703 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for DES NonDet with 2000 samples per class
+rf_large     | acc=0.5075 | train_s=0.485 | inf_s=0.000 | size_bytes=18260549
+hgb          | acc=0.4938 | train_s=0.357 | inf_s=0.000 | size_bytes=746229
+svc_rbf      | acc=0.5050 | train_s=0.200 | inf_s=0.000 | size_bytes=455601
+deep_mlp     | acc=0.4888 | train_s=0.681 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=0.4750 | train_s=0.758 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for AES ECB with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.473 | inf_s=0.000 | size_bytes=171007
+hgb          | acc=1.0000 | train_s=0.127 | inf_s=0.000 | size_bytes=122972
+svc_rbf      | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=4623
+deep_mlp     | acc=1.0000 | train_s=0.700 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=0.9950 | train_s=0.819 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for AES CTR with 2000 samples per class
+rf_large     | acc=0.4913 | train_s=0.538 | inf_s=0.000 | size_bytes=16896389
+hgb          | acc=0.4763 | train_s=0.470 | inf_s=0.000 | size_bytes=779349
+svc_rbf      | acc=0.4900 | train_s=0.254 | inf_s=0.000 | size_bytes=862913
+deep_mlp     | acc=0.4713 | train_s=0.738 | inf_s=0.000 | size_bytes=2764535
+cnn1d        | acc=0.4975 | train_s=0.700 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for AES CTR Reduced with 2000 samples per class
+rf_large     | acc=0.9875 | train_s=0.433 | inf_s=0.000 | size_bytes=4377528
+hgb          | acc=0.9988 | train_s=0.125 | inf_s=0.000 | size_bytes=142338
+svc_rbf      | acc=0.6275 | train_s=0.242 | inf_s=0.000 | size_bytes=843869
+deep_mlp     | acc=0.7725 | train_s=0.671 | inf_s=0.000 | size_bytes=2764533
+cnn1d        | acc=0.4875 | train_s=0.704 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for RSA Plain with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.445 | inf_s=0.000 | size_bytes=133329
+hgb          | acc=0.9975 | train_s=0.376 | inf_s=0.000 | size_bytes=591491
+svc_rbf      | acc=1.0000 | train_s=0.045 | inf_s=0.000 | size_bytes=323848
+deep_mlp     | acc=1.0000 | train_s=0.737 | inf_s=0.000 | size_bytes=3682041
+cnn1d        | acc=1.0000 | train_s=1.295 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for RSA OAEP with 2000 samples per class
+rf_large     | acc=0.4600 | train_s=0.967 | inf_s=0.000 | size_bytes=12723610
+hgb          | acc=0.5025 | train_s=1.731 | inf_s=0.000 | size_bytes=1242149
+svc_rbf      | acc=0.4850 | train_s=0.871 | inf_s=0.000 | size_bytes=6540260
+deep_mlp     | acc=0.5012 | train_s=1.183 | inf_s=0.000 | size_bytes=3682043
+cnn1d        | acc=0.4637 | train_s=1.285 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for RSA OAEP Reused with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.440 | inf_s=0.000 | size_bytes=154448
+hgb          | acc=1.0000 | train_s=0.496 | inf_s=0.000 | size_bytes=665407
+svc_rbf      | acc=1.0000 | train_s=0.031 | inf_s=0.000 | size_bytes=197700
+deep_mlp     | acc=1.0000 | train_s=0.793 | inf_s=0.000 | size_bytes=3682041
+cnn1d        | acc=0.9175 | train_s=1.260 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Toy Caesar with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.431 | inf_s=0.000 | size_bytes=145567
+hgb          | acc=0.9988 | train_s=0.084 | inf_s=0.000 | size_bytes=111508
+svc_rbf      | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=6997
+deep_mlp     | acc=1.0000 | train_s=0.649 | inf_s=0.000 | size_bytes=2698997
+cnn1d        | acc=1.0000 | train_s=0.696 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Toy Repeating XOR with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.428 | inf_s=0.000 | size_bytes=168281
+hgb          | acc=1.0000 | train_s=0.097 | inf_s=0.000 | size_bytes=152573
+svc_rbf      | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=4919
+deep_mlp     | acc=1.0000 | train_s=0.880 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=0.9900 | train_s=0.848 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Toy Byte Rotate with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.415 | inf_s=0.000 | size_bytes=137492
+hgb          | acc=1.0000 | train_s=0.155 | inf_s=0.000 | size_bytes=270399
+svc_rbf      | acc=1.0000 | train_s=0.006 | inf_s=0.000 | size_bytes=7145
+deep_mlp     | acc=1.0000 | train_s=0.935 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.886 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Toy Mask HighNibble with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.429 | inf_s=0.000 | size_bytes=170847
+hgb          | acc=1.0000 | train_s=0.196 | inf_s=0.000 | size_bytes=355796
+svc_rbf      | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=6405
+deep_mlp     | acc=1.0000 | train_s=0.669 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.713 | inf_s=0.000 | size_bytes=136166
+
+Running heavy benchmark for Toy LFSR Stream with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.434 | inf_s=0.000 | size_bytes=191487
+hgb          | acc=1.0000 | train_s=0.093 | inf_s=0.000 | size_bytes=135761
+svc_rbf      | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=4771
+deep_mlp     | acc=1.0000 | train_s=0.644 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=0.9988 | train_s=0.680 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Toy 2-Round Feistel with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.427 | inf_s=0.000 | size_bytes=186367
+hgb          | acc=1.0000 | train_s=0.099 | inf_s=0.000 | size_bytes=156810
+svc_rbf      | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=4475
+deep_mlp     | acc=0.9988 | train_s=0.652 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.796 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Semi Reduced Feistel with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.425 | inf_s=0.000 | size_bytes=204136
+hgb          | acc=1.0000 | train_s=0.224 | inf_s=0.000 | size_bytes=409738
+svc_rbf      | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=5511
+deep_mlp     | acc=1.0000 | train_s=0.652 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.693 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Semi Partial Mask with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.422 | inf_s=0.000 | size_bytes=141567
+hgb          | acc=1.0000 | train_s=0.202 | inf_s=0.000 | size_bytes=412980
+svc_rbf      | acc=1.0000 | train_s=0.004 | inf_s=0.000 | size_bytes=7441
+deep_mlp     | acc=1.0000 | train_s=0.707 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.728 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Semi Truncated AES with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.428 | inf_s=0.000 | size_bytes=183487
+hgb          | acc=0.9988 | train_s=0.110 | inf_s=0.000 | size_bytes=177525
+svc_rbf      | acc=1.0000 | train_s=0.002 | inf_s=0.000 | size_bytes=4031
+deep_mlp     | acc=0.9988 | train_s=0.625 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=0.9925 | train_s=0.751 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Semi Nonce Mix with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.445 | inf_s=0.000 | size_bytes=228395
+hgb          | acc=1.0000 | train_s=0.242 | inf_s=0.000 | size_bytes=477889
+svc_rbf      | acc=0.9975 | train_s=0.029 | inf_s=0.000 | size_bytes=50368
+deep_mlp     | acc=0.9975 | train_s=0.657 | inf_s=0.000 | size_bytes=2699001
+cnn1d        | acc=0.9988 | train_s=0.832 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Semi LFSR Long with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.423 | inf_s=0.000 | size_bytes=176287
+hgb          | acc=1.0000 | train_s=0.096 | inf_s=0.000 | size_bytes=146416
+svc_rbf      | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=4771
+deep_mlp     | acc=1.0000 | train_s=0.647 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=0.9738 | train_s=0.751 | inf_s=0.000 | size_bytes=136164
+
+Running heavy benchmark for Semi Key Rotation with 2000 samples per class
+rf_large     | acc=1.0000 | train_s=0.432 | inf_s=0.000 | size_bytes=154367
+hgb          | acc=1.0000 | train_s=0.099 | inf_s=0.000 | size_bytes=114910
+svc_rbf      | acc=1.0000 | train_s=0.003 | inf_s=0.000 | size_bytes=5067
+deep_mlp     | acc=1.0000 | train_s=0.909 | inf_s=0.000 | size_bytes=2698999
+cnn1d        | acc=1.0000 | train_s=0.774 | inf_s=0.000 | size_bytes=136166
