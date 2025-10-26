@@ -292,27 +292,34 @@ class MINE:
         self.opt = optim.Adam(self.net.parameters(), lr=lr, weight_decay=1e-5)
 
     def estimate_mi(self, M: np.ndarray, C: np.ndarray,
-                    batch_size: int = 512, epochs: int = 200, verbose: bool = False):
+                batch_size: int = 512, epochs: int = 200, verbose: bool = False):
         M_t = torch.tensor(M, dtype=torch.float32).to(self.device)
         C_t = torch.tensor(C, dtype=torch.float32).to(self.device)
         N = M_t.shape[0]
         history = []
 
+        # Split into train and test sets (80/20)
+        split_idx = int(0.8 * N)
+        M_train, M_test = M_t[:split_idx], M_t[split_idx:]
+        C_train, C_test = C_t[:split_idx], C_t[split_idx:]
+
+        N_train = M_train.shape[0]
+
         for epoch in range(epochs):
-            perm = torch.randperm(N)
-            for i in range(0, N, batch_size):
+            perm = torch.randperm(N_train)
+            for i in range(0, N_train, batch_size):
                 idx = perm[i:i+batch_size]
-                mb = M_t[idx]
-                cb = C_t[idx]
+                mb = M_train[idx]
+                cb = C_train[idx]
 
                 # Negative samples (marginal shuffle)
-                perm_neg = torch.randperm(N)[:mb.size(0)]
-                c_neg = C_t[perm_neg]
+                perm_neg = torch.randperm(N_train)[:mb.size(0)]
+                c_neg = C_train[perm_neg]
 
                 T_pos = self.net(mb, cb)
                 T_neg = self.net(mb, c_neg)
 
-                # Stable log(mean(exp()))
+                # Stable log-mean-exp
                 lse = torch.logsumexp(T_neg, dim=0)
                 log_mean_exp = lse - torch.log(torch.tensor(T_neg.size(0), device=self.device))
 
@@ -325,6 +332,7 @@ class MINE:
                 torch.nn.utils.clip_grad_norm_(self.net.parameters(), 1.0)
                 self.opt.step()
 
+            # Compute MI on full dataset (for history)
             with torch.no_grad():
                 perm_eval = torch.randperm(N)
                 T_pos_all = self.net(M_t, C_t)
@@ -333,10 +341,19 @@ class MINE:
                 lse_all = torch.logsumexp(T_neg_all, dim=0).item() - np.log(N)
                 mi_est = Ep_all - lse_all
                 history.append(float(mi_est))
+
+                # Compute MI on test set
+                T_pos_test = self.net(M_test, C_test)
+                T_neg_test = self.net(M_test, C_test[torch.randperm(C_test.shape[0])])
+                Ep_test = T_pos_test.mean().item()
+                lse_test = torch.logsumexp(T_neg_test, dim=0).item() - np.log(C_test.shape[0])
+                mi_test = Ep_test - lse_test
+
                 if verbose and (epoch % max(1, epochs // 10) == 0):
-                    print(f"[MINE] epoch {epoch+1}/{epochs}  I(M;C) = {mi_est:.4f} nats")
+                    print(f"[MINE] epoch {epoch+1}/{epochs}  I(M;C) = {mi_est:.4f} nats, Test MI = {mi_test:.4f} nats")
 
         return history[-1], history
+
 
 def bytes_list_to_matrix(byte_list: List[bytes], target_len: int) -> np.ndarray:
     N = len(byte_list)
