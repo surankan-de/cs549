@@ -20,7 +20,7 @@ from torch.utils.data import TensorDataset, DataLoader
 
 
 WEAK_SYSTEMS = [
-    'No Encryption', 'One-Time Pad', 'Constant XOR', 'Toy Fixed XOR',
+    'No Encryption', 'Constant XOR', 'Toy Fixed XOR',
     'Toy Substitution', 'Toy Permutation', 'Toy 1-Round Feistel',
     'AES CTR Fixed Nonce', 'Toy Caesar', 'Toy Repeating XOR',
     'Toy Byte Rotate', 'Toy Mask HighNibble', 'Toy LFSR Stream',
@@ -34,7 +34,7 @@ SEMI_WEAK_SYSTEMS = [
 ]
 
 STRONG_SYSTEMS = [
-    'DES', 'AES ECB', 'AES CTR', 'RSA Plain', 'RSA OAEP', 'RSA OAEP Reused',
+    'DES', 'AES ECB', 'AES CTR', 'RSA Plain', 'RSA OAEP', 'RSA OAEP Reused','One-Time Pad'
 ]
 
 HEAVY_MODELS = ['rf_large', 'hgb', 'svc_rbf', 'deep_mlp', 'cnn1d']

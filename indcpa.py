@@ -509,21 +509,21 @@ def plot_indcpa_mine_analysis(results_summary):
     from matplotlib.gridspec import GridSpec
     
     WEAK_SYSTEMS = [
-        'No Encryption', 'One-Time Pad', 'Constant XOR', 'Toy Fixed XOR',
+        'No Encryption', 'Constant XOR', 'Toy Fixed XOR',
         'Toy Substitution', 'Toy Permutation', 'Toy 1-Round Feistel',
         'AES CTR Fixed Nonce', 'Toy Caesar', 'Toy Repeating XOR',
         'Toy Byte Rotate', 'Toy Mask HighNibble', 'Toy LFSR Stream',
         'Toy 2-Round Feistel',
     ]
-    
+
     SEMI_WEAK_SYSTEMS = [
         'Semi Reduced Feistel', 'Semi Partial Mask', 'Semi Truncated AES',
         'Semi Nonce Mix', 'Semi LFSR Long', 'Semi Key Rotation',
         'DES NonDet', 'AES CTR Reduced',
     ]
-    
+
     STRONG_SYSTEMS = [
-        'DES', 'AES ECB', 'AES CTR', 'RSA Plain', 'RSA OAEP', 'RSA OAEP Reused',
+        'DES', 'AES ECB', 'AES CTR', 'RSA Plain', 'RSA OAEP', 'RSA OAEP Reused','One-Time Pad'
     ]
     
     systems, accs, mis = zip(*results_summary)
