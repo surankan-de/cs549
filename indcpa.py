@@ -489,6 +489,278 @@ systems_to_test = [
         'Semi Key Rotation'
     ]
 
+def plot_indcpa_mine_analysis(results_summary):
+    """
+    Plot IND-CPA accuracy and MINE MI estimates with differential analysis.
+    
+    Args:
+        results_summary: List of tuples (system_name, accuracy, mi_estimate)
+    
+    Usage:
+        results_summary = []
+        for sysname in systems_to_test:
+            res = run_experiment(...)
+            results_summary.append((sysname, res['adv_accuracy'], res['mi_estimate']))
+        
+        plot_indcpa_mine_analysis(results_summary)
+    """
+    import matplotlib.pyplot as plt
+    import numpy as np
+    from matplotlib.gridspec import GridSpec
+    
+    WEAK_SYSTEMS = [
+        'No Encryption', 'One-Time Pad', 'Constant XOR', 'Toy Fixed XOR',
+        'Toy Substitution', 'Toy Permutation', 'Toy 1-Round Feistel',
+        'AES CTR Fixed Nonce', 'Toy Caesar', 'Toy Repeating XOR',
+        'Toy Byte Rotate', 'Toy Mask HighNibble', 'Toy LFSR Stream',
+        'Toy 2-Round Feistel',
+    ]
+    
+    SEMI_WEAK_SYSTEMS = [
+        'Semi Reduced Feistel', 'Semi Partial Mask', 'Semi Truncated AES',
+        'Semi Nonce Mix', 'Semi LFSR Long', 'Semi Key Rotation',
+        'DES NonDet', 'AES CTR Reduced',
+    ]
+    
+    STRONG_SYSTEMS = [
+        'DES', 'AES ECB', 'AES CTR', 'RSA Plain', 'RSA OAEP', 'RSA OAEP Reused',
+    ]
+    
+    systems, accs, mis = zip(*results_summary)
+    systems = list(systems)
+    accs = np.array(accs)
+    mis = np.array(mis)
+    advantages = 2.0 * (accs - 0.5)
+    mi_bits = mis / np.log(2)
+    
+    categories = []
+    for sys in systems:
+        if sys in WEAK_SYSTEMS:
+            categories.append('Weak')
+        elif sys in SEMI_WEAK_SYSTEMS:
+            categories.append('Semi-Weak')
+        elif sys in STRONG_SYSTEMS:
+            categories.append('Strong')
+        else:
+            categories.append('Unknown')
+    categories = np.array(categories)
+    
+    fig = plt.figure(figsize=(20, 12))
+    gs = GridSpec(3, 3, figure=fig, hspace=0.35, wspace=0.35)
+    
+    # 1. Accuracy by category
+    ax1 = fig.add_subplot(gs[0, 0])
+    for cat, color in [('Weak', '#ff6b6b'), ('Semi-Weak', '#ffa500'), ('Strong', '#4caf50')]:
+        mask = categories == cat
+        if mask.any():
+            x_pos = np.where(mask)[0]
+            ax1.scatter(x_pos, accs[mask], s=100, alpha=0.7, color=color, label=cat, edgecolor='black')
+    ax1.axhline(y=0.5, color='red', linestyle='--', linewidth=2, alpha=0.5)
+    ax1.set_ylabel('IND-CPA Accuracy', fontweight='bold', fontsize=11)
+    ax1.set_title('IND-CPA Classifier Accuracy', fontweight='bold', fontsize=12)
+    ax1.set_xticks(range(len(systems)))
+    ax1.set_xticklabels(systems, rotation=90, fontsize=7)
+    ax1.legend()
+    ax1.grid(alpha=0.3)
+    ax1.set_ylim([0, 1.05])
+    
+    # 2. MI estimates by category
+    ax2 = fig.add_subplot(gs[0, 1])
+    for cat, color in [('Weak', '#ff6b6b'), ('Semi-Weak', '#ffa500'), ('Strong', '#4caf50')]:
+        mask = categories == cat
+        if mask.any():
+            x_pos = np.where(mask)[0]
+            ax2.scatter(x_pos, mi_bits[mask], s=100, alpha=0.7, color=color, label=cat, edgecolor='black')
+    ax2.set_ylabel('MI Estimate (bits)', fontweight='bold', fontsize=11)
+    ax2.set_title('MINE MI Estimates', fontweight='bold', fontsize=12)
+    ax2.set_xticks(range(len(systems)))
+    ax2.set_xticklabels(systems, rotation=90, fontsize=7)
+    ax2.legend()
+    ax2.grid(alpha=0.3)
+    
+    # 3. Accuracy vs MI scatter
+    ax3 = fig.add_subplot(gs[0, 2])
+    for cat, color in [('Weak', '#ff6b6b'), ('Semi-Weak', '#ffa500'), ('Strong', '#4caf50')]:
+        mask = categories == cat
+        if mask.any():
+            ax3.scatter(mi_bits[mask], accs[mask], s=100, alpha=0.7, color=color, label=cat, edgecolor='black')
+            for i in np.where(mask)[0]:
+                ax3.annotate(systems[i], (mi_bits[i], accs[i]), fontsize=6, alpha=0.6)
+    ax3.set_xlabel('MI Estimate (bits)', fontweight='bold', fontsize=11)
+    ax3.set_ylabel('IND-CPA Accuracy', fontweight='bold', fontsize=11)
+    ax3.set_title('Accuracy vs MI Correlation', fontweight='bold', fontsize=12)
+    ax3.axhline(y=0.5, color='red', linestyle='--', alpha=0.5)
+    ax3.legend()
+    ax3.grid(alpha=0.3)
+    
+    # 4. Advantage distribution
+    ax4 = fig.add_subplot(gs[1, 0])
+    for cat, color in [('Weak', 'red'), ('Semi-Weak', 'orange'), ('Strong', 'green')]:
+        mask = categories == cat
+        if mask.any():
+            ax4.hist(advantages[mask], bins=15, alpha=0.5, color=color, label=cat, edgecolor='black')
+    ax4.set_xlabel('IND-CPA Advantage (2(Acc-0.5))', fontweight='bold', fontsize=10)
+    ax4.set_ylabel('Frequency', fontweight='bold', fontsize=10)
+    ax4.set_title('IND-CPA Advantage Distribution', fontweight='bold', fontsize=11)
+    ax4.legend()
+    ax4.grid(alpha=0.3)
+    
+    # 5. MI distribution
+    ax5 = fig.add_subplot(gs[1, 1])
+    for cat, color in [('Weak', 'red'), ('Semi-Weak', 'orange'), ('Strong', 'green')]:
+        mask = categories == cat
+        if mask.any():
+            ax5.hist(mi_bits[mask], bins=15, alpha=0.5, color=color, label=cat, edgecolor='black')
+    ax5.set_xlabel('MI Estimate (bits)', fontweight='bold', fontsize=10)
+    ax5.set_ylabel('Frequency', fontweight='bold', fontsize=10)
+    ax5.set_title('MI Estimate Distribution', fontweight='bold', fontsize=11)
+    ax5.legend()
+    ax5.grid(alpha=0.3)
+    
+    # 6. Category comparison bars
+    ax6 = fig.add_subplot(gs[1, 2])
+    cat_names = ['Weak', 'Semi-Weak', 'Strong']
+    cat_colors = ['#ff6b6b', '#ffa500', '#4caf50']
+    avg_accs = [accs[categories == cat].mean() if (categories == cat).any() else 0 for cat in cat_names]
+    avg_mis = [mi_bits[categories == cat].mean() if (categories == cat).any() else 0 for cat in cat_names]
+    
+    x = np.arange(len(cat_names))
+    width = 0.35
+    ax6.bar(x - width/2, avg_accs, width, label='Avg Accuracy', alpha=0.8, color='steelblue')
+    ax6_twin = ax6.twinx()
+    ax6_twin.bar(x + width/2, avg_mis, width, label='Avg MI (bits)', alpha=0.8, color='coral')
+    
+    ax6.set_ylabel('Average Accuracy', fontweight='bold', fontsize=10)
+    ax6_twin.set_ylabel('Average MI (bits)', fontweight='bold', fontsize=10)
+    ax6.set_xlabel('Category', fontweight='bold', fontsize=10)
+    ax6.set_title('Average Metrics by Category', fontweight='bold', fontsize=11)
+    ax6.set_xticks(x)
+    ax6.set_xticklabels(cat_names)
+    ax6.legend(loc='upper left')
+    ax6_twin.legend(loc='upper right')
+    ax6.grid(alpha=0.3)
+    
+    # 7. Ranked accuracy
+    ax7 = fig.add_subplot(gs[2, 0])
+    sorted_idx = np.argsort(accs)[::-1]
+    colors_ranked = [{'Weak': '#ff6b6b', 'Semi-Weak': '#ffa500', 'Strong': '#4caf50'}.get(categories[i], 'gray') for i in sorted_idx]
+    ax7.barh(range(len(systems)), accs[sorted_idx], color=colors_ranked, alpha=0.8, edgecolor='black')
+    ax7.set_yticks(range(len(systems)))
+    ax7.set_yticklabels([systems[i] for i in sorted_idx], fontsize=7)
+    ax7.set_xlabel('Accuracy', fontweight='bold', fontsize=10)
+    ax7.set_title('Systems Ranked by Accuracy', fontweight='bold', fontsize=11)
+    ax7.axvline(x=0.5, color='red', linestyle='--', linewidth=2, alpha=0.5)
+    ax7.grid(alpha=0.3, axis='x')
+    
+    # 8. Ranked MI
+    ax8 = fig.add_subplot(gs[2, 1])
+    sorted_idx_mi = np.argsort(mi_bits)[::-1]
+    colors_ranked_mi = [{'Weak': '#ff6b6b', 'Semi-Weak': '#ffa500', 'Strong': '#4caf50'}.get(categories[i], 'gray') for i in sorted_idx_mi]
+    ax8.barh(range(len(systems)), mi_bits[sorted_idx_mi], color=colors_ranked_mi, alpha=0.8, edgecolor='black')
+    ax8.set_yticks(range(len(systems)))
+    ax8.set_yticklabels([systems[i] for i in sorted_idx_mi], fontsize=7)
+    ax8.set_xlabel('MI Estimate (bits)', fontweight='bold', fontsize=10)
+    ax8.set_title('Systems Ranked by MI', fontweight='bold', fontsize=11)
+    ax8.grid(alpha=0.3, axis='x')
+    
+    # 9. Summary table
+    ax9 = fig.add_subplot(gs[2, 2])
+    ax9.axis('tight')
+    ax9.axis('off')
+    
+    table_data = []
+    for cat in ['Weak', 'Semi-Weak', 'Strong']:
+        mask = categories == cat
+        if mask.any():
+            n = mask.sum()
+            avg_acc = accs[mask].mean()
+            avg_adv = advantages[mask].mean()
+            avg_mi = mi_bits[mask].mean()
+            success_rate = (accs[mask] > 0.6).sum() / n
+            table_data.append([cat, n, f'{avg_acc:.3f}', f'{avg_adv:.3f}', f'{avg_mi:.2f}', f'{success_rate:.1%}'])
+    
+    table = ax9.table(cellText=table_data,
+                     colLabels=['Category', 'N', 'Avg Acc', 'Avg Adv', 'Avg MI', 'Success'],
+                     cellLoc='center', loc='center', colWidths=[0.2, 0.1, 0.15, 0.15, 0.15, 0.15])
+    table.auto_set_font_size(False)
+    table.set_fontsize(9)
+    table.scale(1, 2.5)
+    ax9.set_title('Summary Statistics', fontweight='bold', fontsize=11, pad=20)
+    
+    plt.savefig('indcpa_mine_analysis.png', dpi=300, bbox_inches='tight')
+    print("✓ Saved: indcpa_mine_analysis.png")
+    
+    return fig
+
+
+def plot_mine_convergence(history_dict):
+    """
+    Plot MINE convergence curves for multiple systems.
+    
+    Args:
+        history_dict: Dict mapping system_name -> mine_history list
+    
+    Usage:
+        history_dict = {}
+        for sysname in systems_to_test:
+            res = run_experiment(...)
+            history_dict[sysname] = res['mine_history']
+        
+        plot_mine_convergence(history_dict)
+    """
+    import matplotlib.pyplot as plt
+    import numpy as np
+    
+    WEAK_SYSTEMS = ['No Encryption', 'Constant XOR', 'Toy Fixed XOR', 'Toy Substitution']
+    SEMI_WEAK_SYSTEMS = ['Semi Reduced Feistel', 'Semi Partial Mask', 'AES CTR Reduced']
+    STRONG_SYSTEMS = ['AES ECB', 'AES CTR', 'DES']
+    
+    fig, axes = plt.subplots(3, 1, figsize=(14, 10))
+    
+    # Weak systems
+    ax = axes[0]
+    for sys, history in history_dict.items():
+        if sys in WEAK_SYSTEMS:
+            epochs = range(1, len(history) + 1)
+            mi_bits = np.array(history) / np.log(2)
+            ax.plot(epochs, mi_bits, label=sys, linewidth=2, alpha=0.7)
+    ax.set_ylabel('MI Estimate (bits)', fontweight='bold', fontsize=11)
+    ax.set_title('MINE Convergence - Weak Systems', fontweight='bold', fontsize=12)
+    ax.legend(fontsize=8, ncol=2)
+    ax.grid(alpha=0.3)
+    
+    # Semi-weak systems
+    ax = axes[1]
+    for sys, history in history_dict.items():
+        if sys in SEMI_WEAK_SYSTEMS:
+            epochs = range(1, len(history) + 1)
+            mi_bits = np.array(history) / np.log(2)
+            ax.plot(epochs, mi_bits, label=sys, linewidth=2, alpha=0.7)
+    ax.set_ylabel('MI Estimate (bits)', fontweight='bold', fontsize=11)
+    ax.set_title('MINE Convergence - Semi-Weak Systems', fontweight='bold', fontsize=12)
+    ax.legend(fontsize=8, ncol=2)
+    ax.grid(alpha=0.3)
+    
+    # Strong systems
+    ax = axes[2]
+    for sys, history in history_dict.items():
+        if sys in STRONG_SYSTEMS:
+            epochs = range(1, len(history) + 1)
+            mi_bits = np.array(history) / np.log(2)
+            ax.plot(epochs, mi_bits, label=sys, linewidth=2, alpha=0.7)
+    ax.set_xlabel('Epoch', fontweight='bold', fontsize=11)
+    ax.set_ylabel('MI Estimate (bits)', fontweight='bold', fontsize=11)
+    ax.set_title('MINE Convergence - Strong Systems', fontweight='bold', fontsize=12)
+    ax.legend(fontsize=8, ncol=2)
+    ax.grid(alpha=0.3)
+    
+    plt.tight_layout()
+    plt.savefig('mine_convergence.png', dpi=300, bbox_inches='tight')
+    print("✓ Saved: mine_convergence.png")
+    
+    return fig
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--device", type=str, default=None)
@@ -501,30 +773,26 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     keys = generate_keys()
-    
-
     results_summary = []
+    history_dict = {}
+    
     for sysname in systems_to_test:
         try:
-            res = run_experiment(
+            res =  run_experiment(
                 cipher_name=sysname,
                 keys=keys,
                 indcpa_samples=args.indcpa_samples,
-                mine_samples=args.mine_samples,
                 indcpa_epochs=args.indcpa_epochs,
+                mine_samples=args.mine_samples,
                 mine_epochs=args.mine_epochs,
                 device=args.device
             )
+
             results_summary.append((sysname, res['adv_accuracy'], res['mi_estimate']))
+            history_dict[sysname] = res['mine_history']  # Store for convergence plot
         except Exception as e:
             print(f"[!] Error testing {sysname}: {e}")
-            import traceback
-            traceback.print_exc()
-
-    print("\n" + "="*70)
-    print("FINAL SUMMARY")
-    print("="*70)
-    print(f"{'System':<25} | {'IND-CPA Acc':<12} | {'MI Estimate':<12}")
-    print("-"*70)
-    for name, acc, mi in results_summary:
-        print(f"{name:<25} | {acc:>11.3f} | {mi:>11.4f}")
+    
+    # Generate plots
+    plot_indcpa_mine_analysis(results_summary)
+    plot_mine_convergence(history_dict)
