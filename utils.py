@@ -1,4 +1,3 @@
-# utils.py
 import torch
 from torch.utils.data import Dataset
 import numpy as np
@@ -29,7 +28,6 @@ class PTCTDataset(Dataset):
     def __getitem__(self, idx):
         pt = self.plaintexts[idx]
         ct = self.ciphertexts[idx]
-        # If ct is concatenated blocks, keep only first block (or derive representation)
         pt_tensor = bytes_to_tensor(pt, self.pt_len)
         ct_tensor = bytes_to_tensor(ct, self.ct_len)
         if self.labels is None:

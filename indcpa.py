@@ -1,13 +1,9 @@
-# indcpa.py - Paper's MINE with Original NN Architecture
-"""
-Exact MINE implementation from paper (Equation 1) with your original NN architecture
-"""
+
 from systems import *
 import os
 import random
 import argparse
 from typing import Tuple, List
-import numpy as np
 from Crypto.Cipher import AES, DES
 from Crypto.Random import get_random_bytes
 import torch
@@ -15,16 +11,22 @@ import torch.nn as nn
 import torch.optim as optim
 import matplotlib.pyplot as plt
 from torch.utils.data import TensorDataset, DataLoader
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.feature_selection import mutual_info_regression
+from sklearn.metrics import mutual_info_score
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.gridspec import GridSpec
 
-# Reproducibility
 SEED = 12345
 random.seed(SEED)
 np.random.seed(SEED)
 torch.manual_seed(SEED)
 
-# -------------------------
-# ALGORITHM 2: IND-CPA BCE Classification
-# -------------------------
+
 
 def generate_non_uniform_plaintext(size: int) -> bytes:
     """Non-uniform plaintext: all zeros"""
@@ -49,7 +51,6 @@ def make_indcpa_dataset(n_samples: int, msg_len: int, keys, cipher_name: str):
     X = np.zeros((2 * n_samples, ct_len), dtype=np.float32)
     y = np.zeros((2 * n_samples,), dtype=np.int64)
     
-    # Y0: Encrypt non-uniform plaintexts (label 0)
     for i in range(n_samples):
         m = generate_non_uniform_plaintext(msg_len)
         c = encrypt_variant(cipher_name, keys, m)
@@ -61,7 +62,6 @@ def make_indcpa_dataset(n_samples: int, msg_len: int, keys, cipher_name: str):
             X[i, :len(c_arr)] = c_arr
         y[i] = 0
     
-    # Y1: Encrypt uniform plaintexts (label 1)
     for i in range(n_samples):
         m = generate_uniform_plaintext(msg_len)
         c = encrypt_variant(cipher_name, keys, m)
@@ -75,10 +75,7 @@ def make_indcpa_dataset(n_samples: int, msg_len: int, keys, cipher_name: str):
     
     return X, y
 
-import numpy as np
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+
 
 class MLClassifier:
     """
@@ -116,9 +113,7 @@ class MLClassifier:
         acc = accuracy_score(y, preds)
         return acc, preds
 
-import numpy as np
-from sklearn.feature_selection import mutual_info_regression
-from sklearn.metrics import mutual_info_score
+
 
 class MLMIEstimator:
     """
@@ -140,7 +135,6 @@ class MLMIEstimator:
             float: estimated MI
         """
         if self.method == "knn":
-            # average over plaintext dimensions
             mis = []
             for i in range(X_plain.shape[1]):
                 mi = mutual_info_regression(X_cipher, X_plain[:, i], discrete_features=False)
@@ -148,7 +142,6 @@ class MLMIEstimator:
             self.mi_value = float(np.mean(mis))
 
         elif self.method == "kde":
-            # flatten to 1D histograms for simplicity
             x = X_plain.flatten()
             y = X_cipher.flatten()
             c_xy = np.histogram2d(x, y, bins=self.kwargs.get("bins", 32))[0]
@@ -219,9 +212,6 @@ def train_classifier(X: np.ndarray, y: np.ndarray, device: str = None,
     return model, acc
 
 
-# -------------------------
-# PAPER'S MINE Implementation (Equation 1)
-# -------------------------
 class TinyClassifier(nn.Module):
     """
     Very small MLP for IND-CPA tests.
@@ -298,7 +288,6 @@ class MINE:
         N = M_t.shape[0]
         history = []
 
-        # Split into train and test sets (80/20)
         split_idx = int(0.8 * N)
         M_train, M_test = M_t[:split_idx], M_t[split_idx:]
         C_train, C_test = C_t[:split_idx], C_t[split_idx:]
@@ -312,14 +301,12 @@ class MINE:
                 mb = M_train[idx]
                 cb = C_train[idx]
 
-                # Negative samples (marginal shuffle)
                 perm_neg = torch.randperm(N_train)[:mb.size(0)]
                 c_neg = C_train[perm_neg]
 
                 T_pos = self.net(mb, cb)
                 T_neg = self.net(mb, c_neg)
 
-                # Stable log-mean-exp
                 lse = torch.logsumexp(T_neg, dim=0)
                 log_mean_exp = lse - torch.log(torch.tensor(T_neg.size(0), device=self.device))
 
@@ -332,7 +319,6 @@ class MINE:
                 torch.nn.utils.clip_grad_norm_(self.net.parameters(), 1.0)
                 self.opt.step()
 
-            # Compute MI on full dataset (for history)
             with torch.no_grad():
                 perm_eval = torch.randperm(N)
                 T_pos_all = self.net(M_t, C_t)
@@ -396,7 +382,6 @@ def run_experiment(
     else:
         msg_len = 16
     
-    # Reset counters
     if cipher_name == 'RSA OAEP Reused':
         import systems
         systems._rsa_oaep_reused_counter = 0
@@ -404,7 +389,6 @@ def run_experiment(
         import systems
         systems._aes_ctr_reduced_counter = 0
     
-    # IND-CPA Classification
     print("\n[Algorithm 2] Generating IND-CPA dataset...")
     X_cls, y_cls = make_indcpa_dataset(
         n_samples=indcpa_samples,
@@ -425,8 +409,8 @@ def run_experiment(
     # acc, _ = model.evaluate(X_test, y_test)
     
     advantage = 2.0 * (acc - 0.5)
-    print(f"✓ Classifier accuracy: {acc:.4f}")
-    print(f"✓ IND-CPA advantage ε = {advantage:.4f}")
+    print(f"Classifier accuracy: {acc:.4f}")
+    print(f"IND-CPA advantage ε = {advantage:.4f}")
 
     # MINE MI Estimation
     print("\n[Algorithm 1] Generating samples for MINE...")
@@ -461,7 +445,7 @@ def run_experiment(
     )
     
     mi_bits = mi_value / np.log(2)
-    print(f"✓ Estimated I(M;C) ≈ {mi_value:.6f} nats ({mi_bits:.2f} bits)")
+    print(f"Estimated I(M;C) ≈ {mi_value:.6f} nats ({mi_bits:.2f} bits)")
 
     return {
         "adv_accuracy": float(acc),
@@ -521,9 +505,7 @@ def plot_indcpa_mine_analysis(results_summary):
         
         plot_indcpa_mine_analysis(results_summary)
     """
-    import matplotlib.pyplot as plt
-    import numpy as np
-    from matplotlib.gridspec import GridSpec
+
     
     WEAK_SYSTEMS = [
         'No Encryption', 'Constant XOR', 'Toy Fixed XOR',
@@ -565,7 +547,6 @@ def plot_indcpa_mine_analysis(results_summary):
     fig = plt.figure(figsize=(20, 12))
     gs = GridSpec(3, 3, figure=fig, hspace=0.35, wspace=0.35)
     
-    # 1. Accuracy by category
     ax1 = fig.add_subplot(gs[0, 0])
     for cat, color in [('Weak', '#ff6b6b'), ('Semi-Weak', '#ffa500'), ('Strong', '#4caf50')]:
         mask = categories == cat
@@ -581,7 +562,6 @@ def plot_indcpa_mine_analysis(results_summary):
     ax1.grid(alpha=0.3)
     ax1.set_ylim([0, 1.05])
     
-    # 2. MI estimates by category
     ax2 = fig.add_subplot(gs[0, 1])
     for cat, color in [('Weak', '#ff6b6b'), ('Semi-Weak', '#ffa500'), ('Strong', '#4caf50')]:
         mask = categories == cat
@@ -595,7 +575,6 @@ def plot_indcpa_mine_analysis(results_summary):
     ax2.legend()
     ax2.grid(alpha=0.3)
     
-    # 3. Accuracy vs MI scatter
     ax3 = fig.add_subplot(gs[0, 2])
     for cat, color in [('Weak', '#ff6b6b'), ('Semi-Weak', '#ffa500'), ('Strong', '#4caf50')]:
         mask = categories == cat
@@ -610,7 +589,6 @@ def plot_indcpa_mine_analysis(results_summary):
     ax3.legend()
     ax3.grid(alpha=0.3)
     
-    # 4. Advantage distribution
     ax4 = fig.add_subplot(gs[1, 0])
     for cat, color in [('Weak', 'red'), ('Semi-Weak', 'orange'), ('Strong', 'green')]:
         mask = categories == cat
@@ -622,7 +600,6 @@ def plot_indcpa_mine_analysis(results_summary):
     ax4.legend()
     ax4.grid(alpha=0.3)
     
-    # 5. MI distribution
     ax5 = fig.add_subplot(gs[1, 1])
     for cat, color in [('Weak', 'red'), ('Semi-Weak', 'orange'), ('Strong', 'green')]:
         mask = categories == cat
@@ -634,7 +611,6 @@ def plot_indcpa_mine_analysis(results_summary):
     ax5.legend()
     ax5.grid(alpha=0.3)
     
-    # 6. Category comparison bars
     ax6 = fig.add_subplot(gs[1, 2])
     cat_names = ['Weak', 'Semi-Weak', 'Strong']
     cat_colors = ['#ff6b6b', '#ffa500', '#4caf50']
@@ -657,7 +633,6 @@ def plot_indcpa_mine_analysis(results_summary):
     ax6_twin.legend(loc='upper right')
     ax6.grid(alpha=0.3)
     
-    # 7. Ranked accuracy
     ax7 = fig.add_subplot(gs[2, 0])
     sorted_idx = np.argsort(accs)[::-1]
     colors_ranked = [{'Weak': '#ff6b6b', 'Semi-Weak': '#ffa500', 'Strong': '#4caf50'}.get(categories[i], 'gray') for i in sorted_idx]
@@ -669,7 +644,6 @@ def plot_indcpa_mine_analysis(results_summary):
     ax7.axvline(x=0.5, color='red', linestyle='--', linewidth=2, alpha=0.5)
     ax7.grid(alpha=0.3, axis='x')
     
-    # 8. Ranked MI
     ax8 = fig.add_subplot(gs[2, 1])
     sorted_idx_mi = np.argsort(mi_bits)[::-1]
     colors_ranked_mi = [{'Weak': '#ff6b6b', 'Semi-Weak': '#ffa500', 'Strong': '#4caf50'}.get(categories[i], 'gray') for i in sorted_idx_mi]
@@ -680,7 +654,6 @@ def plot_indcpa_mine_analysis(results_summary):
     ax8.set_title('Systems Ranked by MI', fontweight='bold', fontsize=11)
     ax8.grid(alpha=0.3, axis='x')
     
-    # 9. Summary table
     ax9 = fig.add_subplot(gs[2, 2])
     ax9.axis('tight')
     ax9.axis('off')
@@ -705,7 +678,7 @@ def plot_indcpa_mine_analysis(results_summary):
     ax9.set_title('Summary Statistics', fontweight='bold', fontsize=11, pad=20)
     
     plt.savefig('indcpa_mine_analysis.png', dpi=300, bbox_inches='tight')
-    print("✓ Saved: indcpa_mine_analysis.png")
+    print("Saved: indcpa_mine_analysis.png")
     
     return fig
 
@@ -725,8 +698,6 @@ def plot_mine_convergence(history_dict):
         
         plot_mine_convergence(history_dict)
     """
-    import matplotlib.pyplot as plt
-    import numpy as np
     
     WEAK_SYSTEMS = ['No Encryption', 'Constant XOR', 'Toy Fixed XOR', 'Toy Substitution']
     SEMI_WEAK_SYSTEMS = ['Semi Reduced Feistel', 'Semi Partial Mask', 'AES CTR Reduced']
@@ -773,7 +744,7 @@ def plot_mine_convergence(history_dict):
     
     plt.tight_layout()
     plt.savefig('mine_convergence.png', dpi=300, bbox_inches='tight')
-    print("✓ Saved: mine_convergence.png")
+    print("Saved: mine_convergence.png")
     
     return fig
 
@@ -810,6 +781,5 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"[!] Error testing {sysname}: {e}")
     
-    # Generate plots
     plot_indcpa_mine_analysis(results_summary)
     plot_mine_convergence(history_dict)

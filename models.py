@@ -1,4 +1,3 @@
-# models.py
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -33,7 +32,7 @@ class MINE(nn.Module):
         ex = self.embed_x(x)
         ey = self.embed_y(y)
         combined = torch.cat([ex, ey], dim=-1)
-        return self.net(combined).squeeze(-1)  # shape (batch,)
+        return self.net(combined).squeeze(-1)  
 
 class Classifier(nn.Module):
     def __init__(self, pt_dim, ct_dim, hidden=256, num_classes=2):

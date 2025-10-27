@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-"""Visualization tool for heavy model benchmark results."""
+
 import time
 import pickle
 import numpy as np
@@ -675,27 +674,27 @@ def main():
     
     fig1 = plot_accuracy_by_category(all_results)
     plt.savefig('heavy_diff_accuracy_by_category.png', dpi=300, bbox_inches='tight')
-    print("✓ Saved: heavy_diff_accuracy_by_category.png")
+    print("Saved: heavy_diff_accuracy_by_category.png")
     
     fig2 = plot_accuracy_diff_matrix(all_results)
     plt.savefig('heavy_diff_model_comparison_matrix.png', dpi=300, bbox_inches='tight')
-    print("✓ Saved: heavy_diff_model_comparison_matrix.png")
+    print("Saved: heavy_diff_model_comparison_matrix.png")
     
     fig3 = plot_category_performance_heatmap(all_results)
     plt.savefig('heavy_diff_category_heatmap.png', dpi=300, bbox_inches='tight')
-    print("✓ Saved: heavy_diff_category_heatmap.png")
+    print("Saved: heavy_diff_category_heatmap.png")
     
     fig4 = plot_model_effectiveness_across_categories(all_results)
     plt.savefig('heavy_diff_model_effectiveness.png', dpi=300, bbox_inches='tight')
-    print("✓ Saved: heavy_diff_model_effectiveness.png")
+    print("Saved: heavy_diff_model_effectiveness.png")
     
     fig5 = plot_differential_analysis(all_results)
     plt.savefig('heavy_diff_comprehensive_analysis.png', dpi=300, bbox_inches='tight')
-    print("✓ Saved: heavy_diff_comprehensive_analysis.png")
+    print("Saved: heavy_diff_comprehensive_analysis.png")
     
     fig6 = plot_timing_analysis(all_results)
     plt.savefig('heavy_diff_timing_analysis.png', dpi=300, bbox_inches='tight')
-    print("✓ Saved: heavy_diff_timing_analysis.png")
+    print("Saved: heavy_diff_timing_analysis.png")
     
     print("\n" + "="*70)
     print("All heavy model differential plots generated successfully!")

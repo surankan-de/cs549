@@ -1,22 +1,11 @@
-# systems.py - FIXED VERSION
 from Crypto.Cipher import AES, DES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 from Crypto.Util import Counter
 import hashlib
 
-# ------------------- Toy / Diagnostic Ciphers -------------------
-import hashlib
-from Crypto.Cipher import AES
-from Crypto.Util import Counter  # already imported above; kept for clarity
 
-# ---------------- More weak toy ciphers (for experiments) ----------------
-import hashlib
-# ---------------- Semi-weak / Mid-strength Toy Ciphers ----------------
-import hashlib
-from Crypto.Util import Counter
-from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
+
 
 def semi_reduced_feistel(key: bytes, plaintext: bytes, rounds: int = 3) -> bytes:
     """
@@ -54,7 +43,6 @@ def semi_truncated_block(key: bytes, plaintext: bytes, keep_bytes: int = 4) -> b
     cipher = AES.new(akey, AES.MODE_ECB)
     ct_full = cipher.encrypt(plaintext[:16].ljust(16, b'\x00'))
     keep = ct_full[:keep_bytes]
-    # deterministic tail: XOR plaintext first keep_bytes with key bytes
     tail = bytes([p ^ akey[i % len(akey)] for i, p in enumerate(plaintext[:len(plaintext)])])[keep_bytes:keep_bytes+max(0, len(plaintext)-keep_bytes)]
     return (keep + tail)[:max(keep_bytes, len(plaintext))]
 
@@ -64,7 +52,6 @@ def semi_nonce_mix(key: bytes, plaintext: bytes) -> bytes:
     nonce = random(12) || plaintext[:4]
     This leaks a small portion of the plaintext while keeping partial randomness.
     """
-    # Take first 4 bytes of plaintext (or pad if shorter)
     pt_part = (plaintext[:4] + b'\x00' * 4)[:4]
     nonce_rand = get_random_bytes(12)
     nonce = nonce_rand + pt_part  # total 16 bytes (128 bits)
@@ -73,7 +60,6 @@ def semi_nonce_mix(key: bytes, plaintext: bytes) -> bytes:
     cipher = AES.new(hashlib.sha256(key if key else b'kn').digest()[:16], AES.MODE_CTR, counter=ctr)
     ciphertext = cipher.encrypt(plaintext)
     
-    # Return full nonce (so decryption could be done) + ciphertext
     return nonce + ciphertext
 
 def semi_lfsr_longperiod(key: bytes, plaintext: bytes, taps=(7,5,4,3)) -> bytes:
@@ -85,7 +71,6 @@ def semi_lfsr_longperiod(key: bytes, plaintext: bytes, taps=(7,5,4,3)) -> bytes:
     state = seed
     out = bytearray()
     for i in range(len(plaintext)):
-        # generate one byte by stepping LFSR 8 times
         byte = 0
         for _ in range(8):
             newbit = 0
@@ -156,14 +141,11 @@ def toy_lfsr_stream(key: bytes, plaintext: bytes, taps=(0,2,3,5)) -> bytes:
     Not cryptographically secure; leaks strongly due to short period.
     """
     seed = key[0] if key else 0xA5
-    # create an 8-bit state
     state = seed & 0xFF
     out = bytearray()
     for _ in range(len(plaintext)):
-        # generate next byte by stepping LFSR 8 times
         byte = 0
         for _ in range(8):
-            # tap positions are bit indices; compute new bit
             newbit = 0
             for t in taps:
                 newbit ^= (state >> t) & 1
@@ -251,7 +233,6 @@ def aes_ctr_fixed_nonce(key: bytes, plaintext: bytes) -> bytes:
     return cipher.encrypt(plaintext)
 
 
-# ------------------- Baselines -------------------
 
 def no_encryption(_, plaintext: bytes) -> bytes:
     """No encryption - plaintext = ciphertext"""
@@ -266,7 +247,6 @@ def constant_key_xor(key: bytes, plaintext: bytes) -> bytes:
     """Insecure: XOR with constant key (repeating key stream)"""
     return bytes([p ^ key[i % len(key)] for i, p in enumerate(plaintext)])
 
-# ------------------- DES -------------------
 
 def des_deterministic(key: bytes, plaintext: bytes) -> bytes:
     """DES ECB mode - deterministic, not IND-CPA secure"""
@@ -283,7 +263,6 @@ def des_nondeterministic(key: bytes, plaintext: bytes) -> bytes:
     pt = plaintext + bytes([pad_len]) * pad_len
     return iv + cipher.encrypt(pt)
 
-# ------------------- AES -------------------
 
 def aes_ecb(key: bytes, plaintext: bytes) -> bytes:
     """AES ECB mode - deterministic, not IND-CPA secure"""
@@ -300,7 +279,6 @@ def aes_ctr(key: bytes, plaintext: bytes) -> bytes:
     ct = cipher.encrypt(plaintext)
     return nonce + ct
 
-# Global counter for AES CTR Reduced
 _aes_ctr_reduced_counter = 0
 
 def aes_ctr_reduced_counter(key: bytes, plaintext: bytes) -> bytes:
@@ -317,11 +295,9 @@ def aes_ctr_reduced_counter(key: bytes, plaintext: bytes) -> bytes:
     """
     global _aes_ctr_reduced_counter
     
-    # Counter wraps at 100,000
     counter_val = _aes_ctr_reduced_counter % 100000
     _aes_ctr_reduced_counter += 1
     
-    # Use counter as nonce (causes reuse!)
     nonce = counter_val.to_bytes(8, 'big') + b'\x00' * 8
     
     ctr = Counter.new(128, initial_value=int.from_bytes(nonce, "big"))
@@ -330,7 +306,6 @@ def aes_ctr_reduced_counter(key: bytes, plaintext: bytes) -> bytes:
     
     return nonce[:8] + ct
 
-# ------------------- RSA -------------------
 
 def rsa_plain(pubkey, plaintext: bytes) -> bytes:
     """
@@ -355,7 +330,6 @@ def rsa_oaep(pubkey, plaintext: bytes) -> bytes:
     cipher = PKCS1_OAEP.new(pubkey)
     return cipher.encrypt(plaintext)
 
-# Global counter for RSA OAEP Reused
 _rsa_oaep_reused_counter = 0
 
 def rsa_oaep_reused_seed(pubkey, plaintext: bytes) -> bytes:
@@ -372,7 +346,6 @@ def rsa_oaep_reused_seed(pubkey, plaintext: bytes) -> bytes:
     global _rsa_oaep_reused_counter
     _rsa_oaep_reused_counter += 1
     
-    # Use plaintext hash as seed (WRONG!)
     seed = hashlib.sha256(plaintext).digest()
     
     class DeterministicRandom:
@@ -393,7 +366,6 @@ def rsa_oaep_reused_seed(pubkey, plaintext: bytes) -> bytes:
     cipher = PKCS1_OAEP.new(pubkey, randfunc=randfunc)
     return cipher.encrypt(plaintext)
 
-# ------------------- Key generator -------------------
 
 def generate_keys():
     """Generate all keys needed for experiments"""
@@ -405,7 +377,6 @@ def generate_keys():
     }
     return keys
 
-# ------------------- Encryption dispatcher -------------------
 
 def encrypt_variant(name: str, keys, plaintext: bytes) -> bytes:
     """

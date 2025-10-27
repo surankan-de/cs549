@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-"""Visualization tool for lightweight model benchmark results.
-
-Generates differential plots categorized by cipher strength:
-- Weak systems (easily breakable)
-- Semi-weak systems (some vulnerabilities)
-- Strong systems (cryptographically secure)
-"""
 import time
 import pickle
 import numpy as np
@@ -24,7 +16,6 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 
 
-# Categorize systems by security strength
 WEAK_SYSTEMS = [
     'No Encryption', 'Constant XOR', 'Toy Fixed XOR',
     'Toy Substitution', 'Toy Permutation', 'Toy 1-Round Feistel',
@@ -154,7 +145,6 @@ def plot_accuracy_diff_matrix(all_results):
     n_models = len(model_names)
     n_systems = len(system_names)
     
-    # Create difference matrix: for each system, compute pairwise model differences
     fig, axes = plt.subplots(3, 1, figsize=(14, 18))
     
     weak, semi, strong = categorize_results(all_results)
@@ -171,7 +161,6 @@ def plot_accuracy_diff_matrix(all_results):
         
         systems = list(results.keys())
         
-        # Aggregate differences across systems
         avg_diff_matrix = np.zeros((n_models, n_models))
         
         for system in systems:
@@ -181,10 +170,8 @@ def plot_accuracy_diff_matrix(all_results):
                     acc_j = results[system][model_j][0]
                     avg_diff_matrix[i, j] += (acc_i - acc_j)
         
-        # Average across systems
         avg_diff_matrix /= len(systems)
         
-        # Plot heatmap
         im = ax.imshow(avg_diff_matrix, cmap='RdYlGn', aspect='auto', 
                       vmin=-0.3, vmax=0.3)
         ax.set_xticks(np.arange(n_models))
@@ -195,7 +182,6 @@ def plot_accuracy_diff_matrix(all_results):
         ax.set_xlabel('Model (column)', fontweight='bold')
         ax.set_ylabel('Model (row)', fontweight='bold')
         
-        # Add text annotations
         for i in range(n_models):
             for j in range(n_models):
                 color = 'white' if abs(avg_diff_matrix[i, j]) > 0.15 else 'black'
@@ -214,7 +200,6 @@ def plot_category_performance_heatmap(all_results):
     weak, semi, strong = categorize_results(all_results)
     model_names = list(MODELS.keys())
     
-    # Compute average accuracy for each model in each category
     categories = ['Weak', 'Semi-Weak', 'Strong']
     acc_matrix = np.zeros((len(categories), len(model_names)))
     
@@ -235,7 +220,6 @@ def plot_category_performance_heatmap(all_results):
     ax.set_xlabel('Model', fontweight='bold', fontsize=12)
     ax.set_ylabel('System Category', fontweight='bold', fontsize=12)
     
-    # Add text annotations
     for i in range(len(categories)):
         for j in range(len(model_names)):
             text = ax.text(j, i, f'{acc_matrix[i, j]:.3f}',
@@ -263,7 +247,6 @@ def plot_model_effectiveness_across_categories(all_results):
     colors = plt.cm.tab10(np.arange(len(model_names)))
     
     for i, model in enumerate(model_names):
-        # Compute average accuracy for this model in each category
         weak_acc = np.mean([weak[sys][model][0] for sys in weak.keys()]) if weak else 0
         semi_acc = np.mean([semi[sys][model][0] for sys in semi.keys()]) if semi else 0
         strong_acc = np.mean([strong[sys][model][0] for sys in strong.keys()]) if strong else 0
@@ -294,7 +277,6 @@ def plot_timing_analysis(all_results):
     fig = plt.figure(figsize=(18, 12))
     gs = GridSpec(3, 3, figure=fig, hspace=0.35, wspace=0.35)
     
-    # 1. Training time by category
     ax1 = fig.add_subplot(gs[0, 0])
     
     categories_data = [weak, semi, strong]
@@ -323,7 +305,6 @@ def plot_timing_analysis(all_results):
     ax1.set_yscale('log')
     ax1.grid(axis='y', alpha=0.3)
     
-    # 2. Inference time by category
     ax2 = fig.add_subplot(gs[0, 1])
     
     for idx, (results, cat_name, color) in enumerate(zip(categories_data, cat_names, colors_cat)):
@@ -345,7 +326,6 @@ def plot_timing_analysis(all_results):
     ax2.set_yscale('log')
     ax2.grid(axis='y', alpha=0.3)
     
-    # 3. Training/Inference time ratio
     ax3 = fig.add_subplot(gs[0, 2])
     
     ratios = []
@@ -364,7 +344,6 @@ def plot_timing_analysis(all_results):
     ax3.set_yscale('log')
     ax3.grid(axis='y', alpha=0.3)
     
-    # 4. Efficiency: Accuracy per second of training
     ax4 = fig.add_subplot(gs[1, 0])
     
     efficiency_weak = []
@@ -400,14 +379,12 @@ def plot_timing_analysis(all_results):
     ax4.set_yscale('log')
     ax4.grid(axis='y', alpha=0.3)
     
-    # 5. Time consistency across systems
     ax5 = fig.add_subplot(gs[1, 1])
     
     train_stds = []
     for model in model_names:
         times = [all_results[sys][model][1] for sys in all_results.keys()]
-        train_stds.append(np.std(times) / np.mean(times))  # Coefficient of variation
-    
+        train_stds.append(np.std(times) / np.mean(times))  
     ax5.bar(model_names, train_stds, alpha=0.7, color='coral', edgecolor='black')
     ax5.set_xlabel('Model', fontsize=10, fontweight='bold')
     ax5.set_ylabel('CV (Std/Mean)', fontsize=10, fontweight='bold')
@@ -416,7 +393,6 @@ def plot_timing_analysis(all_results):
     plt.setp(ax5.xaxis.get_majorticklabels(), rotation=45, ha='right', fontsize=8)
     ax5.grid(axis='y', alpha=0.3)
     
-    # 6. Scatter: Accuracy vs Training Time (all systems)
     ax6 = fig.add_subplot(gs[1, 2])
     
     colors_scatter = plt.cm.tab10(np.arange(len(model_names)))
@@ -434,7 +410,6 @@ def plot_timing_analysis(all_results):
     ax6.grid(alpha=0.3)
     ax6.axhline(y=0.5, color='red', linestyle='--', alpha=0.5)
     
-    # 7. Heatmap: Average training time per model per system category
     ax7 = fig.add_subplot(gs[2, 0])
     
     time_matrix = np.zeros((len(cat_names), len(model_names)))
@@ -460,7 +435,6 @@ def plot_timing_analysis(all_results):
     
     plt.colorbar(im, ax=ax7, label='Time (s)')
     
-    # 8. Speedup factor: Inference vs Training
     ax8 = fig.add_subplot(gs[2, 1])
     
     speedups = []
@@ -480,13 +454,11 @@ def plot_timing_analysis(all_results):
     ax8.set_yscale('log')
     ax8.grid(axis='y', alpha=0.3)
     
-    # Add speedup values on bars
     for bar, speedup in zip(bars, speedups):
         height = bar.get_height()
         ax8.text(bar.get_x() + bar.get_width()/2., height,
                 f'{speedup:.0f}x', ha='center', va='bottom', fontsize=8, fontweight='bold')
     
-    # 9. Time-Accuracy Pareto frontier
     ax9 = fig.add_subplot(gs[2, 2])
     
     for model in model_names:
@@ -516,7 +488,6 @@ def plot_differential_analysis(all_results):
     fig = plt.figure(figsize=(18, 10))
     gs = GridSpec(2, 3, figure=fig, hspace=0.3, wspace=0.3)
     
-    # 1. Performance distribution by category
     ax1 = fig.add_subplot(gs[0, :2])
     
     for cat_name, results, color in [('Weak', weak, 'red'), 
@@ -539,7 +510,6 @@ def plot_differential_analysis(all_results):
     ax1.axvline(x=0.5, color='red', linestyle='--', alpha=0.5, linewidth=2)
     ax1.grid(alpha=0.3)
     
-    # 2. Best model per system
     ax2 = fig.add_subplot(gs[0, 2])
     
     best_models = []
@@ -573,7 +543,6 @@ def plot_differential_analysis(all_results):
     plt.setp(ax2.xaxis.get_majorticklabels(), rotation=45, ha='right')
     ax2.grid(axis='y', alpha=0.3)
     
-    # 3. Attack success rate (acc > 0.6) by category
     ax3 = fig.add_subplot(gs[1, 0])
     
     categories_data = [weak, semi, strong]
@@ -606,7 +575,6 @@ def plot_differential_analysis(all_results):
         ax3.text(bar.get_x() + bar.get_width()/2., height,
                 f'{rate:.1%}', ha='center', va='bottom', fontweight='bold', fontsize=11)
     
-    # 4. Model consistency (std dev of accuracy)
     ax4 = fig.add_subplot(gs[1, 1])
     
     model_stds = []
@@ -622,7 +590,6 @@ def plot_differential_analysis(all_results):
     plt.setp(ax4.xaxis.get_majorticklabels(), rotation=45, ha='right')
     ax4.grid(axis='y', alpha=0.3)
     
-    # 5. Accuracy gap: Weak vs Strong
     ax5 = fig.add_subplot(gs[1, 2])
     
     gaps = []
@@ -649,7 +616,6 @@ def main():
     print("DIFFERENTIAL ANALYSIS: ML Models vs Cryptographic Systems")
     print("="*70)
     
-    # Run benchmarks
     all_results = {}
     for cipher in systems_to_test:
         results = run_bench(cipher_name=cipher, n_samples=2000, msg_len=16)
@@ -660,7 +626,6 @@ def main():
     print("Generating differential plots...")
     print("="*70)
     
-    # Generate all plots
     fig1 = plot_accuracy_by_category(all_results)
     plt.savefig('diff_accuracy_by_category.png', dpi=300, bbox_inches='tight')
     print("✓ Saved: diff_accuracy_by_category.png")
